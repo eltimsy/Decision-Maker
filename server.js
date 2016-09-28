@@ -36,11 +36,20 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
+// app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+app.get("/main", (req, res) => {
+  console.log("trying to reach main")
+  res.render("main");
+});
+
+app.get("/new", (req, res) => {
+  res.render("new");
 });
 
 app.listen(PORT, () => {
