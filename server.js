@@ -32,11 +32,6 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.use(session({
-  store: new pgSession({
-    pg: pg,
-    conString: `postgres://tdlsuzdayfdcbb:x20mJq8t4mA3kSRuVedcvGAJJx@ec2-54-235-124-2.compute-1.amazonaws.com:5432/d24a3u7jlcmstb`,
-    tableName: 'session'
-  }),
   cookieName: 'session',
   secret: 'crazy person',
   duration: 30 * 60 * 1000,
@@ -70,8 +65,22 @@ app.post('/logout', (req, res) => {
 
 app.post('/login', (req, res) => {
   console.log(req.body)
-  req.session.user = req.body.user;
-  req.session.password = req.body.password;
+  let user = req.body.username;
+  let password = req.body.password;
+  knex.select('username','password').from('users').where({
+    username: user,
+    password: password
+  }).then(function(resp){
+    if(resp.length < 1){
+      console.log("fail")
+    } else {
+      req.session.authenicate = true;
+      req.session.username = req.body.username;
+      console.log(resp);
+      console.log("success!");
+    }
+
+  })
   res.redirect('/main');
 })
 
