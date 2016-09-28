@@ -1,5 +1,7 @@
 'use strict';
 
+// Just some preliminary work for the run-off.
+
 // Uses process.argv[2] to substitute the input of a question number.
 
 const pollData = require('../db/polls.json');
@@ -20,22 +22,14 @@ function selectQuestion(questionNumber, dataSet) {
 // arrays, but this is probably best for now.
 
 function bordaCount(questionNumber, dataSet) {
-  const preferenceSet = selectQuestion(Number(questionNumber), dataSet);
-  let results = {};
-  preferenceSet.forEach((pollResult, pollIndex) => {
-    console.log(pollResult)
-    pollResult.forEach((pref, prefIndex) => {
-      if (!results[pref]) {
-        results[pref] = 0
-      };
-      results[pref] += prefIndex;
-    })
-  })
-  return results;
+
 }
 
-// Returns the borda count for each choice_id; the highest count
-// indicates the winner, though the rest of the data might still
-// be useful.
 
-console.log(bordaCount(process.argv[2], pollData));
+
+function ()
+get first preference votes, eachArray[-1];
+check
+for majority,
+if majority: done;
+else :
