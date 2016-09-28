@@ -5,7 +5,6 @@ exports.seed = function (knex, Promise) {
       return Promise.all([
         knex('questions')
         .insert({
-          question_id: 1,
           question: 'Where should we eat tomorrow?',
           admin_url: 'adsfdkfvxcn83arapdf',
           poll_url: 'cvvi9eeferiemd,vnzpfd90i',
@@ -13,7 +12,6 @@ exports.seed = function (knex, Promise) {
         }),
         knex('questions')
         .insert({
-          question_id: 2,
           question: 'Who\'s the best coder?',
           admin_url: 'fadsfadsfkxclvjdfasf',
           poll_url: 'adsfadf29rjdasjfsdf',
@@ -21,7 +19,6 @@ exports.seed = function (knex, Promise) {
         }),
         knex('questions')
         .insert({
-          question_id: 3,
           question: 'Who should be president?',
           admin_url: 'vxcifudspiuerijwe8rdcddf',
           poll_url: 'adfsjkcnzvcnwero34',

@@ -19,6 +19,7 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const pgSession   = require('connect-pg-simple')(session);
+const createPoll  = require('./server/lib/create-poll');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -32,11 +33,6 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.use(session({
-  store: new pgSession({
-    pg: pg,
-    conString: `postgres://tdlsuzdayfdcbb:x20mJq8t4mA3kSRuVedcvGAJJx@ec2-54-235-124-2.compute-1.amazonaws.com:5432/d24a3u7jlcmstb`,
-    tableName: 'session'
-  }),
   cookieName: 'session',
   secret: 'crazy person',
   duration: 30 * 60 * 1000,
@@ -47,7 +43,9 @@ app.use(session({
 
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -70,15 +68,30 @@ app.post('/logout', (req, res) => {
 
 app.post('/login', (req, res) => {
   console.log(req.body)
-  req.session.user = req.body.user;
-  req.session.password = req.body.password;
+  let user = req.body.username;
+  let password = req.body.password;
+  knex.select('username','password').from('users').where({
+    username: user,
+    password: password
+  }).then(function(resp){
+    if(resp.length < 1){
+      console.log("fail")
+    } else {
+      req.session.authenicate = true;
+      req.session.username = req.body.username;
+      console.log(resp);
+      console.log("success!");
+    }
+
+  })
   res.redirect('/main');
 })
 
 app.get('/auth', (req, res) => {
   res.json({
     username: req.session.user,
-    password: req.session.password});
+    password: req.session.password
+  });
 })
 
 app.get("/", (req, res) => {
@@ -86,8 +99,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/createpoll", (req, res) => {
-  console.log(req.body);
-  res.end();
+  createPoll(knex, req.session.user, req.body);
+  res.redirect(303, "/main");
 })
 
 app.post("/email", (req, res) => {
@@ -97,10 +110,11 @@ app.post("/email", (req, res) => {
     subject: "It's a URL",
     text: req.body.comment
   }
-  mailgun.messages().send(data, function(error, body) {
-    console.log(body);
-    res.redirect("/");
-  })
+  mailgun.messages()
+    .send(data, function (error, body) {
+      console.log(body);
+      res.redirect("/");
+    })
 
 })
 
