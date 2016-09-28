@@ -86,7 +86,7 @@ app.get("/", (req, res) => {
 
 app.post("/createpoll", (req, res) => {
   createPoll(knex, req.session.user, req.body);
-  res.end();
+  res.redirect(303, "/main");
 })
 
 app.post("/email", (req, res) => {
