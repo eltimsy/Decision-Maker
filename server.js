@@ -19,7 +19,7 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const pgSession   = require('connect-pg-simple')(session);
-const createPoll = require('./server/lib/create-poll');
+const createPoll  = require('./server/lib/create-poll');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -33,10 +33,6 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.use(session({
-  store: new pgSession({
-    conString: `${process.env.DB_USER} : ${process.env.DB_PASS} @ ${process.env.DB_HOST} / ${process.env.DB_NAME}`,
-    tableName: 'session'
-  }),
   cookieName: 'session',
   secret: 'crazy person',
   duration: 30 * 60 * 1000,
