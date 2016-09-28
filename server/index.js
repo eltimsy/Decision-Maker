@@ -5,6 +5,16 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const app         = express();
 const path        = require('path');
+const session = require('express-session');
+
+app.use(session({
+  cookieName: 'session',
+  secret: 'crazy person',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+  resave: false,
+  saveUninitialized: true,
+}))
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
