@@ -18,20 +18,20 @@ CREATE TABLE questions (
   question text NOT NULL,
   admin_url text NOT NULL,
   poll_url text NOT NULL,
-  user_id integer REFERENCES users (user_id)
+  user_id integer REFERENCES users (user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE choices (
   choice_id integer PRIMARY KEY,
   choice_name varchar(100) NOT NULL,
   description text,
-  question_id integer REFERENCES questions (question_id)
+  question_id integer REFERENCES questions (question_id) ON DELETE CASCADE
 );
 
 CREATE TABLE votes_by_array (
   vote_id integer PRIMARY KEY,
   preferences integer[] NOT NULL,
-  question_id integer REFERENCES questions (question_id)
+  question_id integer REFERENCES questions (question_id) ON DELETE CASCADE
 );
 
 -- votes_by_array stores choice_ids in the preference array
@@ -40,8 +40,8 @@ CREATE TABLE votes_by_array (
 CREATE TABLE votes_by_vote (
   vote_id integer PRIMARY KEY,
   vote_value integer NOT NULL,
-  question_id integer REFERENCES questions (question_id),
-  choice_id integer REFERENCES choices (choice_id)
+  question_id integer REFERENCES questions (question_id) ON DELETE CASCADE,
+  choice_id integer REFERENCES choices (choice_id) ON DELETE CASCADE
 );
 
 -- if there are future issues, try using json instead of jsonb
@@ -51,7 +51,7 @@ CREATE TABLE votes_by_vote (
 CREATE TABLE session (
   session_id text PRIMARY KEY NOT DEFERRABLE INITIALLY IMMEDIATE COLLATE "default",
   expire timestamp(6) NOT NULL,
-	user_id integer REFERENCES users (user_id)
+	user_id integer REFERENCES users (user_id) ON DELETE CASCADE
 ) WITH (OIDS=FALSE);
 
 -- I put this code aside to examine again, should we find that
