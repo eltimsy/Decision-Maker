@@ -4,11 +4,13 @@ body {
   background-color: white;
 }
 
+
 .form-signin {
   margin-top: 28%;
   width: 50%;
   margin-right: 25%;
   margin-left: 25%;
+  display: block;
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -38,4 +40,12 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.form-signin button#signup {
+  margin-top: 5%;
+}
+
+#register-form {
+  display: block;
 }
