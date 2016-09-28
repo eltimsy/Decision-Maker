@@ -1,6 +1,5 @@
 "use strict";
 
-<<<<<<< Updated upstream
 require('dotenv').config();
 
 const PORT        = process.env.PORT || 8080;
@@ -20,29 +19,6 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const pgSession   = require('connect-pg-simple')(session);
-=======
-require('dotenv')
-  .config();
-
-const PORT = process.env.PORT || 8080;
-const ENV = process.env.ENV || "development";
-const express = require("express");
-const bodyParser = require("body-parser");
-const sass = require("node-sass-middleware");
-const app = express();
-const session = require('express-session');
-
-const api_key = process.env.mailgun_api_key;
-const domain = process.env.mailgun_domain;
-const email = process.env.mailgun_email;
-const mailgun = require('mailgun-js')({
-  apiKey: api_key,
-  domain: domain
-});
-const knexConfig = require("./knexfile");
-const knex = require("knex")(knexConfig[ENV]);
-const morgan = require('morgan');
-const knexLogger = require('knex-logger');
 const createPoll = require('./server/lib/create-poll');
 
 // Seperated Routes for each Resource
@@ -58,7 +34,7 @@ app.use(knexLogger(knex));
 
 app.use(session({
   store: new pgSession({
-    conString: `postgres://tdlsuzdayfdcbb:x20mJq8t4mA3kSRuVedcvGAJJx@ec2-54-235-124-2.compute-1.amazonaws.com:5432/d24a3u7jlcmstb`,
+    conString: `${process.env.DB_USER} : ${process.env.DB_PASS} @ ${process.env.DB_HOST} / ${process.env.DB_NAME}`,
     tableName: 'session'
   }),
   cookieName: 'session',
