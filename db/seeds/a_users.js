@@ -5,7 +5,6 @@ exports.seed = function (knex, Promise) {
       return Promise.all([
         knex('users')
         .insert({
-          user_id: 1,
           firstname: 'Alice',
           lastname: 'Smith',
           email: 'alice@goodmail.com',
@@ -13,7 +12,6 @@ exports.seed = function (knex, Promise) {
         }),
         knex('users')
         .insert({
-          user_id: 2,
           firstname: 'Jim',
           lastname: 'Thomson',
           email: 'jim@goodmail.com',
@@ -21,7 +19,6 @@ exports.seed = function (knex, Promise) {
         }),
         knex('users')
         .insert({
-          user_id: 3,
           firstname: 'Franklin',
           lastname: 'Roosevelt',
           email: 'fdr@europe.com',
@@ -29,7 +26,6 @@ exports.seed = function (knex, Promise) {
         }),
         knex('users')
         .insert({
-          user_id: 4,
           firstname: 'Jane',
           lastname: 'White',
           email: 'jwhite@placeholder.net',
@@ -37,7 +33,6 @@ exports.seed = function (knex, Promise) {
         }),
         knex('users')
         .insert({
-          user_id: 5,
           firstname: 'Abraham',
           lastname: 'Lincoln',
           email: 'abe@logcabin.gov',

@@ -1,5 +1,6 @@
 "use strict";
 
+<<<<<<< Updated upstream
 require('dotenv').config();
 
 const PORT        = process.env.PORT || 8080;
@@ -19,6 +20,30 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const pgSession   = require('connect-pg-simple')(session);
+=======
+require('dotenv')
+  .config();
+
+const PORT = process.env.PORT || 8080;
+const ENV = process.env.ENV || "development";
+const express = require("express");
+const bodyParser = require("body-parser");
+const sass = require("node-sass-middleware");
+const app = express();
+const session = require('express-session');
+
+const api_key = process.env.mailgun_api_key;
+const domain = process.env.mailgun_domain;
+const email = process.env.mailgun_email;
+const mailgun = require('mailgun-js')({
+  apiKey: api_key,
+  domain: domain
+});
+const knexConfig = require("./knexfile");
+const knex = require("knex")(knexConfig[ENV]);
+const morgan = require('morgan');
+const knexLogger = require('knex-logger');
+const createPoll = require('./server/lib/create-poll');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -46,7 +71,9 @@ app.use(session({
 
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -77,7 +104,8 @@ app.post('/login', (req, res) => {
 app.get('/auth', (req, res) => {
   res.json({
     username: req.session.user,
-    password: req.session.password});
+    password: req.session.password
+  });
 })
 
 app.get("/", (req, res) => {
@@ -85,7 +113,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/createpoll", (req, res) => {
-  console.log(req.body);
+  createPoll(knex, req.session.user, req.body);
   res.end();
 })
 
@@ -96,10 +124,11 @@ app.post("/email", (req, res) => {
     subject: "It's a URL",
     text: req.body.comment
   }
-  mailgun.messages().send(data, function(error, body) {
-    console.log(body);
-    res.redirect("/");
-  })
+  mailgun.messages()
+    .send(data, function (error, body) {
+      console.log(body);
+      res.redirect("/");
+    })
 
 })
 
