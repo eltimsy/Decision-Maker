@@ -8,6 +8,7 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
+const session     = require('express-session');
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -25,6 +26,15 @@ app.use(morgan('dev'));
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 
+app.use(session({
+  cookieName: 'session',
+  secret: 'crazy person',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+  resave: false,
+  saveUninitialized: true,
+}))
+
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
@@ -33,12 +43,33 @@ app.use("/styles", sass({
   debug: true,
   outputStyle: 'expanded'
 }));
+
+
 app.use(express.static("public"));
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
+
+app.post('/logout', (req, res) => {
+  req.session.user = null;
+  res.end();
+});
+
+app.post('/login', (req, res) => {
+  req.session.user = req.body.username;
+  req.session.password = req.body.password;
+  console.log(req.session);
+  res.end();
+})
+
+app.get('/auth', (req, res) => {
+  res.json({
+    username: req.session.user,
+    password: req.session.password});
+})
+
 app.get("/", (req, res) => {
   res.render("index");
 });
