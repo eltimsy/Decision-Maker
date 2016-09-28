@@ -78,6 +78,11 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.post("/createpoll", (req, res) => {
+  console.log(req.body);
+  res.end();
+})
+
 app.post("/email", (req, res) => {
   console.log(req.body);
   var data = {
@@ -88,8 +93,9 @@ app.post("/email", (req, res) => {
   }
   mailgun.messages().send(data, function(error, body) {
     console.log(body);
+    res.redirect("/");
   })
-  res.end();
+
 })
 
 
