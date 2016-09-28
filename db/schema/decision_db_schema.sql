@@ -30,8 +30,8 @@ CREATE TABLE choices (
 
 CREATE TABLE votes_by_array (
   vote_id integer PRIMARY KEY,
-  preferences integer[] NOT NULL
-  question_id integer REFERENCES questions (question_id),
+  preferences integer[] NOT NULL,
+  question_id integer REFERENCES questions (question_id)
 );
 
 -- votes_by_array stores choice_ids in the preference array
@@ -50,8 +50,8 @@ CREATE TABLE votes_by_vote (
 
 CREATE TABLE session (
   session_id text PRIMARY KEY NOT DEFERRABLE INITIALLY IMMEDIATE COLLATE "default",
-	session_user integer REFERENCES users (user_id),
-	expire timestamp(6) NOT NULL
+  expire timestamp(6) NOT NULL,
+	user_id integer REFERENCES users (user_id)
 ) WITH (OIDS=FALSE);
 
 -- I put this code aside to examine again, should we find that
