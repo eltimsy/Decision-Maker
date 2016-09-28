@@ -13,10 +13,12 @@ module.exports = function createPollQuestion(db, user, pollInput) {
   };
   db('questions')
     .insert(qRow)
-    // .returning(question_id)
-    // .then(console.log('success?!?'))
+    .returning('question_id')
+    .then((newId) => {
+      
+
+    })
     .catch((error) => {console.log(error);});
-  // console.log(question)
 }
 
 function createPollChoices(db, question, pollInput) {
