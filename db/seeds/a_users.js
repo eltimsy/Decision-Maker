@@ -5,7 +5,6 @@ exports.seed = function (knex, Promise) {
       return Promise.all([
         knex('users')
         .insert({
-          user_id: 1,
           firstname: 'Alice',
           lastname: 'Smith',
           username: 'Alice123',
@@ -14,7 +13,6 @@ exports.seed = function (knex, Promise) {
         }),
         knex('users')
         .insert({
-          user_id: 2,
           firstname: 'Jim',
           lastname: 'Thomson',
           username: 'Jimmy',
@@ -23,7 +21,6 @@ exports.seed = function (knex, Promise) {
         }),
         knex('users')
         .insert({
-          user_id: 3,
           firstname: 'Franklin',
           lastname: 'Roosevelt',
           username: 'Frankie',
@@ -32,7 +29,6 @@ exports.seed = function (knex, Promise) {
         }),
         knex('users')
         .insert({
-          user_id: 4,
           firstname: 'Jane',
           lastname: 'White',
           username: 'Janegold',
@@ -41,7 +37,6 @@ exports.seed = function (knex, Promise) {
         }),
         knex('users')
         .insert({
-          user_id: 5,
           firstname: 'Abraham',
           lastname: 'Lincoln',
           username: 'LincolnGod',
