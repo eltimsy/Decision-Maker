@@ -1,0 +1,45 @@
+nav {
+  position: fixed;
+  height: 80px;
+  width: 100%;
+  background: #e6f0ff;
+  color: #e8fdff;
+  padding-left: 2em;
+  padding-top: 0em;
+  padding-right: 2em;
+  padding-bottom: 0em;
+  top: 0;
+  z-index: 1;
+
+    img.logo {
+      width: 10%;
+      margin-top: -1%;
+    }
+
+    span.header {
+      font-size:170%;
+      color: black;
+    }
+
+    button.new {
+      margin-right: 24%;
+      float: right;
+      margin-top: 3%;
+      color: black;
+    }
+
+    div.logIn {
+      float: right;
+      margin-right: -27%;
+      color: black;
+
+      p {
+
+      }
+
+      button#logout {
+
+      }
+    }
+
+}
