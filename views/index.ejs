@@ -47,8 +47,13 @@
     </nav>
 
     <div class="container">
-      <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
+      <div class="panel">
+        <a href="#" class="active" id="form-signin-heading">Login</a>
+        <a href="#" id="form-signup-heading">Login</a>
+      </div>
+
+      <form class="form-signin" action="/main" method="post" role="form">
+
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
@@ -58,8 +63,22 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="signin">Sign in</button>
+
       </form>
+
+      <form class="form-register" action="/users" method="post" role="form">
+
+					<input type="text" name="username" id="username" placeholder="Username" value="">
+
+					<input type="email" name="email" id="email" placeholder="Email Address" value="">
+
+					<input type="password" name="password" id="password" placeholder="Password">
+
+					<input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password">
+
+	        <button class="btn btn-lg btn-primary btn-block" type="submit" id="signup">Sign up</button>
+			</form>
 
     </div> <!-- /container -->
 
