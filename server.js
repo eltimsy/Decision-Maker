@@ -60,7 +60,6 @@ app.post('/logout', (req, res) => {
 app.post('/login', (req, res) => {
   req.session.user = req.body.username;
   req.session.password = req.body.password;
-  console.log(req.session);
   res.end();
 })
 
@@ -76,11 +75,15 @@ app.get("/", (req, res) => {
 
 app.get("/main", (req, res) => {
   console.log("trying to reach main")
-  res.render("main");
+  res.render("main", {
+    userName: req.session.user
+  });
 });
 
 app.get("/new", (req, res) => {
-  res.render("new");
+  res.render("new", {
+    userName: req.session.user
+  });
 });
 
 app.listen(PORT, () => {
