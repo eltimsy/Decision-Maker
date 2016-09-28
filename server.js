@@ -10,6 +10,10 @@ const sass        = require("node-sass-middleware");
 const app         = express();
 const session     = require('express-session');
 
+const api_key     = process.env.mailgun_api_key;
+const domain      = process.env.mailgun_domain;
+const email       = process.env.mailgun_email;
+const mailgun     = require('mailgun-js')({apiKey: api_key, domain: domain});
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
@@ -36,6 +40,7 @@ app.use(session({
 }))
 
 app.set("view engine", "ejs");
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
@@ -72,6 +77,22 @@ app.get('/auth', (req, res) => {
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+app.post("/email", (req, res) => {
+  console.log(req.body);
+  var data = {
+    from: `${req.body.name} <${email}>`,
+    to: req.body.mail,
+    subject: "It's a URL",
+    text: req.body.comment
+  }
+  mailgun.messages().send(data, function(error, body) {
+    console.log(body);
+  })
+  res.end();
+})
+
+
 
 app.get("/main", (req, res) => {
   console.log("trying to reach main")

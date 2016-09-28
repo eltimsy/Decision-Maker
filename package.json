@@ -18,6 +18,7 @@
   "homepage": "https://github.com/eltimsy/Decision-Maker#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "mailgun-js": "^0.7.12",
     "cookie-session": "^2.0.0-alpha.1",
     "dotenv": "^2.0.0",
     "ejs": "^2.5.2",
