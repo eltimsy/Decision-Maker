@@ -33,7 +33,6 @@ app.use(knexLogger(knex));
 
 app.use(session({
   store: new pgSession({
-    pg: pg,
     conString: `postgres://tdlsuzdayfdcbb:x20mJq8t4mA3kSRuVedcvGAJJx@ec2-54-235-124-2.compute-1.amazonaws.com:5432/d24a3u7jlcmstb`,
     tableName: 'session'
   }),
