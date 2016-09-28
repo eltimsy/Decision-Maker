@@ -18,6 +18,7 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const pgSession   = require('connect-pg-simple')(session);
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -31,6 +32,11 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.use(session({
+  store: new pgSession({
+    pg: pg,
+    conString: `postgres://tdlsuzdayfdcbb:x20mJq8t4mA3kSRuVedcvGAJJx@ec2-54-235-124-2.compute-1.amazonaws.com:5432/d24a3u7jlcmstb`,
+    tableName: 'session'
+  }),
   cookieName: 'session',
   secret: 'crazy person',
   duration: 30 * 60 * 1000,
@@ -63,9 +69,10 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  req.session.user = req.body.username;
+  console.log(req.body)
+  req.session.user = req.body.user;
   req.session.password = req.body.password;
-  res.end();
+  res.redirect('/main');
 })
 
 app.get('/auth', (req, res) => {
@@ -84,7 +91,6 @@ app.post("/createpoll", (req, res) => {
 })
 
 app.post("/email", (req, res) => {
-  console.log(req.body);
   var data = {
     from: `${req.body.name} <${email}>`,
     to: req.body.mail,
@@ -102,9 +108,7 @@ app.post("/email", (req, res) => {
 
 app.get("/main", (req, res) => {
   console.log("trying to reach main")
-  res.render("main", {
-    userName: req.session.user
-  });
+  res.render("main");
 });
 
 app.get("/new", (req, res) => {

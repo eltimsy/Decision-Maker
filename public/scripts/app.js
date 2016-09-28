@@ -8,7 +8,7 @@ $(function() {
     }
   });
 
-  $('.login').on('submit','.login-form', function(ev) {
+  /*$('.login').on('submit','.login-form', function(ev) {
     let login = $(this).serialize();
     ev.preventDefault();
     $.ajax({
@@ -17,7 +17,7 @@ $(function() {
       data: login
     }).done(function(data) {
     });
-  });
+  });*/
 });
 
 /*function checkUser() {
