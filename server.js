@@ -128,13 +128,13 @@ app.route("/polls/voter/:id")
   })
 
 app.get("/main", (req, res) => {
-//todo: get user_id from cookie and assign values here
   if(req.session.auth === true) {
-    knex.select('question')
+    knex.select()
       .from('questions')
       .where('user_id', req.session.userid)
+      .orderBy('question_id', 'desc')
       .then(function(result) {
-        console.log(result)
+        console.log(result);
         res.render("main", {
           questions: result,
           username: req.session.username

@@ -88,9 +88,8 @@ $(document).ready(function(){
   });
 
   /* todo: '/new' prevent blank input*/
-  $('.add_row').click(function () {
 
-  });
+
 
 
 });
