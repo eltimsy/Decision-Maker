@@ -159,6 +159,7 @@ app.get("/test", (req, res) => {
   let choices = [];
   let poll = [];
   let max = 0;
+  let name = "";
   getPoll(knex, 'cvvi9eeferiemd,vnzpfd90i').then(
     function(resp){
       poll = resp;
@@ -168,13 +169,18 @@ app.get("/test", (req, res) => {
         result = borda.bordaCount(1, resp);
         console.log(poll);
         for(let key in result) {
-           poll.choices.forEach(function(index){
-             if(key === index.choice_id){
-               choices.push(index.choice_name);
-             }
+          poll.choices.forEach(function(index){
+            if(key === index.choice_id){
+              choices.push(index.choice_name);
+              if(max < result[key]){
+                max = result[key];
+                name = index.choice_name;
+              }
+            }
           });
+
         }
-        console.log(choices);
+        console.log(name, max);
         let vote = Object.keys(result).map(function (key) {
           return result[key];
         });
