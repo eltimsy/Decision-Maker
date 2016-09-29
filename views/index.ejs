@@ -26,7 +26,8 @@
 
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+    <!--<script type="text/javascript" src="/scripts/app.js"></script>-->
+    <script type="text/javascript" src="/scripts/login.js"></script>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -63,9 +64,16 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" id="signin" value="Sign in">
+        <input class="logintest btn btn-lg btn-primary btn-block" type="submit" id="signin" value="Sign in">
 
       </form>
+
+      <form class="login-form" action="/login" method="post">
+        <input id="username" type="text" name="username" placeholder="name">
+        <input id="password" type="password" name="password">
+        <input class="logintest" type="submit" value="Login">
+      </form>
+
 
       <form class="form-register" action="/users" method="post" role="form">
 

@@ -67,7 +67,6 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  console.log(req.body)
   let user = req.body.username;
   let password = req.body.password;
   knex.select('username','password').from('users').where({
@@ -76,15 +75,18 @@ app.post('/login', (req, res) => {
   }).then(function(resp){
     if(resp.length < 1){
       console.log("fail")
+      res.redirect('/');
     } else {
       req.session.authenicate = true;
       req.session.username = req.body.username;
       console.log(resp);
       console.log("success!");
+      res.redirect('/main');
     }
 
   })
-  res.redirect('/main');
+  res.redirect('/');
+
 })
 
 app.get('/auth', (req, res) => {
