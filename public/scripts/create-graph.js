@@ -15,28 +15,24 @@ $(document).ready(function() {
       title = data[2];
       winner = data[3];
       console.log(voteresult, votechoice, title, winner);
-      // let $graph = $(`
-      // <body>
-      //   <div id="myDiv" style="width: 480px; height: 400px;"></div>
-      //   <script>`)
-      // 	var data = [{
-      // 		x: [votechoice],
-      // 		y: [voteresult],
-      // 		type: 'bar',
-      // 		marker: {
-      // 			color: 'rgb(52,28,173)'
-      // 		}
-      // 	}];
-      //
-      // 	var layout = {
-      // 		title: title
-      // 	}
-      //
-      // 	Plotly.newPlot('myDiv', data, layout);(`
-      //   </script>
-      // </body>
-      // `);
-      // $('div#history').append($graph);
+      let $graph = $(`
+        <div id="myDiv" style="width: 480px; height: 400px;"></div>
+      `);
+      $('div#history').append($graph);
+
+      var data = [{
+        x: [votechoice],
+        y: [voteresult],
+        type: 'bar',
+        marker: {
+          color: 'rgb(52,28,173)'
+        }
+      }];
+
+      var layout = {
+        title: title
+      }
+      setTimeout(() => Plotly.newPlot('myDiv', data, layout));
     });
   })
 })
