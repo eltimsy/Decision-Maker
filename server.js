@@ -142,7 +142,7 @@ app.post("/email", (req, res) => {
 
 app.get("/main", (req, res) => {
 //todo: get user_id from cookie and assign values here
-  if(req.session.auth === true){
+  if(req.session.auth === true) {
     knex.select('question')
       .from('questions')
       .where('user_id', 2)
@@ -158,9 +158,14 @@ app.get("/main", (req, res) => {
 });
 
 app.get("/new", (req, res) => {
-  res.render("new", {
-    userName: req.session.user
-  });
+  if(req.session.auth === true) {
+    res.render("new", {
+      userName: req.session.user
+    });
+  } else {
+    res.redirect('/');
+  }
+
 });
 
 app.listen(PORT, () => {
