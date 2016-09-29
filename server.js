@@ -18,7 +18,7 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
-const pgSession   = require('connect-pg-simple')(session);
+// const pgSession   = require('connect-pg-simple')(session);
 const createPoll  = require('./server/lib/create-poll');
 
 // Seperated Routes for each Resource
@@ -98,6 +98,10 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.get("/user_id/history", (req, res) => {
+
+});
+
 app.post("/createpoll", (req, res) => {
   createPoll(knex, req.session.user, req.body);
   res.redirect(303, "/main");
@@ -118,11 +122,18 @@ app.post("/email", (req, res) => {
 
 })
 
-
-
 app.get("/main", (req, res) => {
-  console.log("trying to reach main")
-  res.render("main");
+//todo: get user_id from cookie and assign values here
+  knex.select('question')
+    .from('questions')
+    .where('user_id', 3)
+    .then(function(result) {
+      res.render("main", {
+        questions: result
+      });
+  });
+
+
 });
 
 app.get("/new", (req, res) => {
