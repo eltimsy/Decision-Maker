@@ -40,7 +40,7 @@ app.use(session({
   activeDuration: 5 * 60 * 1000,
   resave: false,
   saveUninitialized: true,
-}))
+}));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
@@ -80,20 +80,6 @@ app.get('/auth', (req, res) => {
   }
 });
 
-app.post('/register', (req, res) => {
-  let entry = {
-    firstname: 'Johnson',
-    lastname: 'Doe',
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password
-  };
-  knex('users').insert(entry)
-  .returning('user_id')
-  .then((user_id) => {
-      res.redirect(303, '/main');
-  });
-});
 
 app.post("/createpoll", (req, res) => {
   createPoll(knex, req.session.userid, req.body);
