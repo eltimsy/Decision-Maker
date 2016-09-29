@@ -134,6 +134,7 @@ app.get("/main", (req, res) => {
       .from('questions')
       .where('user_id', req.session.userid)
       .then(function(result) {
+        console.log(result)
         res.render("main", {
           questions: result,
           username: req.session.username
