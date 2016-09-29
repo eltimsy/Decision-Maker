@@ -1,6 +1,6 @@
 nav {
   position: fixed;
-  height: 13%;
+  height: 100px;
   width: 100%;
   background: #e6f0ff;
   color: #e8fdff;
@@ -9,28 +9,34 @@ nav {
   padding-right: 2em;
   padding-bottom: 0em;
   top: 0;
-  z-index: 1;
-}
-
-nav img.logo {
-  width: 7%;
-  margin-top: -1%;
-}
-
-nav span.header {
-  font-size: 170%;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: black;
+  font-family: 'PT Sans', sans-serif;
 }
 
-nav button.new {
-  margin-right: 24%;
-  float: right;
-  margin-top: 3%;
-  color: black;
+nav div.header {
+  margin-top: 16px;
+  font-size: 200%;
 }
 
-nav div.logIn {
-  float: right;
-  margin-right: -27%;
-  color: black;
+nav div.header img.logo {
+  width: 100px;
+}
+
+nav div.header div {
+  position: relative;
+  bottom: 65px;
+  left: 85px;
+}
+
+nav form.logout-form {
+  display: flex;
+  flex-direction: column;
+}
+
+nav form.logout-form div {
+  margin-bottom: 6px;
 }
