@@ -3,7 +3,6 @@
 const express = require('express');
 const app  = express.Router();
 
-
 module.exports = (knex) => {
   app.post('/login', (req, res) => {
     console.log(req.body)
@@ -30,7 +29,41 @@ module.exports = (knex) => {
       res.redirect('/');
     })
   });
+//
+app.post('/register', (req, res) => {
+  let entry = {
+    firstname: 'joe',
+    lastname: 'doe',
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password
+  };
+  function registerNewUser(entry){
+    const insertNewUsername = (entry) => {
+      knex('users').insert(entry)
+      // .returning(user_id)
+      .then(() => {
+          res.redirect(303, '/main');
+      });
+    };
 
+    knex('users')
+    .where({username: entry.username})
+    .select()
+    .then((result) => {
+      if (result.length > 0) {
+        //todo: create a flash message;
+        console.log("This name is already taken!");
+        res.redirect(303, '/')
+      } else {
+        insertNewUsername(entry);
+      }
+    });
+  };
 
+  registerNewUser(entry);
+});
+
+//
   return app;
-}
+};
