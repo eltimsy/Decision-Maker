@@ -89,13 +89,10 @@ app.post('/login', (req, res) => {
       res.redirect('/');
     } else {
       req.session.auth = true;
-      req.session.username = req.body.username;
-      req.session.userid = req.body.user_id;
-      console.log(resp);
-      console.log("success!");
+      req.session.username = resp[0].username;
+      req.session.userid = Number(resp[0].user_id);
       res.redirect('/main');
     }
-
   });
 });
 
@@ -123,6 +120,7 @@ app.post('/register', (req, res) => {
 });
 
 app.post("/createpoll", (req, res) => {
+  console.log(req.session.userid)
   createPoll(knex, req.session.userid, req.body);
   res.redirect(303, "/main");
 })
