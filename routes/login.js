@@ -41,9 +41,13 @@ app.post('/register', (req, res) => {
   function registerNewUser(entry){
     const insertNewUsername = (entry) => {
       knex('users').insert(entry)
-      // .returning(user_id)
-      .then(() => {
-          res.redirect(303, '/main');
+      .returning('user_id')
+      .then((resp) => {
+        console.log(req.body.username);
+        req.session.auth = true;
+        req.session.username = req.body.username;
+        req.session.userid = Number(resp);
+        res.redirect(303, '/main');
       });
     };
 
