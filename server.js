@@ -20,6 +20,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 // const pgSession   = require('connect-pg-simple')(session);
 const createPoll  = require('./server/lib/create-poll');
+// const registerNewUser = require('./server/lib/register.js');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -39,7 +40,7 @@ app.use(session({
   activeDuration: 5 * 60 * 1000,
   resave: false,
   saveUninitialized: true,
-}))
+}));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
@@ -61,55 +62,83 @@ app.use(express.static("public"));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  console.log(req.session.username)
+  if(req.session.auth === true){
+    res.redirect('/main');
+  } else {
+    res.render("index");
+  }
 });
 
 app.post('/logout', (req, res) => {
-  req.session.user = null;
-  res.end();
+  req.session.destroy(function(err) {
+    res.redirect('/');
+  })
+
 });
 
 app.post('/login', (req, res) => {
   console.log(req.body)
   let user = req.body.username;
   let password = req.body.password;
-  knex.select('username','password').from('users').where({
+  knex.select('username','password','user_id').from('users').where({
     username: user,
     password: password
-  }).then(function(resp){
-    if(resp.length < 1){
+  }).then(function(resp) {
+    if(resp.length < 1) {
       console.log("fail")
+      res.redirect('/');
     } else {
-      req.session.authenicate = true;
+      req.session.auth = true;
       req.session.username = req.body.username;
+      req.session.userid = req.body.user_id;
       console.log(resp);
       console.log("success!");
+      res.redirect('/main');
     }
 
   });
-  res.redirect('/main');
 });
 
 app.get('/auth', (req, res) => {
-  res.json({
-    username: req.session.user,
-    password: req.session.password
-  });
+  if(req.session.auth === true) {
+    res.redirect('/main');
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.post('/register', (req, res) => {
   let entry = {
-    firstname: 'Johnson',
-    lastname: 'Doe',
+    firstname: 'joe',
+    lastname: 'doe',
     username: req.body.username,
     email: req.body.email,
     password: req.body.password
   };
-  knex('users').insert(entry)
-  .returning('user_id')
-  .then((user_id) => {
-      res.redirect(303, '/main');
-  });
+  function registerNewUser(entry){
+    const insertNewUsername = (entry) => {
+      knex('users').insert(entry)
+      // .returning(user_id)
+      .then(() => {
+          res.redirect(303, '/main');
+      });
+    };
+
+    knex('users')
+    .where({username: entry.username})
+    .select()
+    .then((result) => {
+      if (result.length > 0) {
+        //todo: create a flash message;
+        console.log("This name is already taken!");
+        res.redirect(303, '/')
+      } else {
+        insertNewUsername(entry);
+      }
+    });
+  };
+  registerNewUser(entry);
 });
 
 app.post("/createpoll", (req, res) => {
@@ -134,15 +163,18 @@ app.post("/email", (req, res) => {
 
 app.get("/main", (req, res) => {
 //todo: get user_id from cookie and assign values here
-  knex.select('question')
-    .from('questions')
-    .where('user_id', 2)
-    .then(function(result) {
-      res.render("main", {
-        questions: result
-      });
-  });
-
+  if(req.session.auth === true){
+    knex.select('question')
+      .from('questions')
+      .where('user_id', 2)
+      .then(function(result) {
+        res.render("main", {
+          questions: result
+        });
+    });
+  } else {
+    res.redirect('/');
+  }
 
 });
 
