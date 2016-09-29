@@ -18,11 +18,11 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
-// const pgSession   = require('connect-pg-simple')(session);
 const createPoll  = require('./server/lib/create-poll');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const login        = require('./routes/login');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -69,32 +69,7 @@ app.get("/", (req, res) => {
   }
 });
 
-app.post('/logout', (req, res) => {
-  req.session.destroy(function(err) {
-    res.redirect('/');
-  })
-
-});
-
-app.post('/login', (req, res) => {
-  console.log(req.body)
-  let user = req.body.username;
-  let password = req.body.password;
-  knex.select('username','password','user_id').from('users').where({
-    username: user,
-    password: password
-  }).then(function(resp) {
-    if(resp.length < 1) {
-      console.log("fail")
-      res.redirect('/');
-    } else {
-      req.session.auth = true;
-      req.session.username = resp[0].username;
-      req.session.userid = Number(resp[0].user_id);
-      res.redirect('/main');
-    }
-  });
-});
+app.use('/home', login(knex));
 
 app.get('/auth', (req, res) => {
   if(req.session.auth === true) {

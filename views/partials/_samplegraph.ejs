@@ -1,0 +1,24 @@
+<head>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+
+  <div id="myDiv" style="width: 480px; height: 400px;"></div>
+  <script>
+	var data = [{
+		x: ['A', 'B', 'C', 'D', 'E'],
+		y: [20, 14, 23, 1, 2],
+		type: 'bar',
+		marker: {
+			color: 'rgb(52,28,173)'
+		}
+	}];
+
+	var layout = {
+		title: 'New Graphy'
+	}
+
+	Plotly.newPlot('myDiv', data, layout);
+  </script>
+</body>
