@@ -83,7 +83,7 @@ app.get('/auth', (req, res) => {
 
 app.post("/createpoll", (req, res) => {
   createPoll(knex, req.session.userid, req.body);
-  res.redirect(303, "/main");
+  setTimeout(function(){res.redirect(303, "/main");},1000);
 })
 
 app.post("/email", (req, res) => {
