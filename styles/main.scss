@@ -1,9 +1,14 @@
+html {
+  font-family: 'PT Sans', sans-serif;
+  font-family: 'PT Serif', serif;
+}
+
 body {
   background-color: white;
-
+  color: black;
 
   main#container {
-    margin-top: 100px;
+    margin-top: 120px;
 
     div#history {
       float: right;

@@ -1,9 +1,15 @@
+html {
+  font-family: 'PT Sans', sans-serif;
+  font-family: 'PT Serif', serif;
+}
+
 body {
   background-color: white;
+  color: black;
 }
 
 body main#container {
-  margin-top: 100px;
+  margin-top: 120px;
 }
 
 body main#container div#history {

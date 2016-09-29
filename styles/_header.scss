@@ -2,7 +2,7 @@
 
 nav {
   position: fixed;
-  height: 13%;
+  height: 100px;
   width: 100%;
   background: #e6f0ff;
   color: #e8fdff;
@@ -11,36 +11,31 @@ nav {
   padding-right: 2em;
   padding-bottom: 0em;
   top: 0;
-  z-index: 1;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  font-family: 'PT Sans', sans-serif;
 
-    img.logo {
-      width: 7%;
-      margin-top: -1%;
-    }
-
-    span.header {
-      font-size:170%;
-      color: black;
-    }
-
-    button.new {
-      margin-right: 24%;
-      float: right;
-      margin-top: 3%;
-      color: black;
-    }
-
-    div.logIn {
-      float: right;
-      margin-right: -27%;
-      color: black;
-
-      p {
-
+    div.header {
+      margin-top: 16px;
+      font-size: 200%;
+      img.logo {
+        width: 100px;
       }
+      div {
+        position: relative;
+        bottom: 65px;
+        left: 85px;
+      }
+    }
 
-      button#logout {
-
+    form.logout-form {
+      display: flex;
+      flex-direction: column;
+      div {
+        margin-bottom: 6px;
       }
     }
 
