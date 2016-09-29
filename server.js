@@ -20,7 +20,6 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 // const pgSession   = require('connect-pg-simple')(session);
 const createPoll  = require('./server/lib/create-poll');
-// const registerNewUser = require('./server/lib/register.js');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -40,7 +39,7 @@ app.use(session({
   activeDuration: 5 * 60 * 1000,
   resave: false,
   saveUninitialized: true,
-}));
+}))
 
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
@@ -90,13 +89,10 @@ app.post('/login', (req, res) => {
       res.redirect('/');
     } else {
       req.session.auth = true;
-      req.session.username = req.body.username;
-      req.session.userid = req.body.user_id;
-      console.log(resp);
-      console.log("success!");
+      req.session.username = resp[0].username;
+      req.session.userid = Number(resp[0].user_id);
       res.redirect('/main');
     }
-
   });
 });
 
@@ -138,11 +134,13 @@ app.post('/register', (req, res) => {
       }
     });
   };
+
   registerNewUser(entry);
 });
 
 app.post("/createpoll", (req, res) => {
-  createPoll(knex, req.session.user, req.body);
+  console.log(req.session.userid)
+  createPoll(knex, req.session.userid, req.body);
   res.redirect(303, "/main");
 })
 
@@ -163,7 +161,7 @@ app.post("/email", (req, res) => {
 
 app.get("/main", (req, res) => {
 //todo: get user_id from cookie and assign values here
-  if(req.session.auth === true){
+  if(req.session.auth === true) {
     knex.select('question')
       .from('questions')
       .where('user_id', 2)
@@ -179,9 +177,14 @@ app.get("/main", (req, res) => {
 });
 
 app.get("/new", (req, res) => {
-  res.render("new", {
-    userName: req.session.user
-  });
+  if(req.session.auth === true) {
+    res.render("new", {
+      userName: req.session.user
+    });
+  } else {
+    res.redirect('/');
+  }
+
 });
 
 app.listen(PORT, () => {

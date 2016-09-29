@@ -10,6 +10,7 @@ const generateRandomString = require('./random-string');
 
 module.exports = function createPollQuestion(db, user, pollInput) {
   const question = pollInput.question;
+  console.log(user)
   delete pollInput.question;
   const qRow = {
     question: question,
