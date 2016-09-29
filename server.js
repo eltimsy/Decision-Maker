@@ -120,7 +120,7 @@ app.get("/main", (req, res) => {
   if(req.session.auth === true) {
     knex.select('question')
       .from('questions')
-      .where('user_id', 2)
+      .where('user_id', req.session.userid)
       .then(function(result) {
         res.render("main", {
           questions: result
