@@ -1,3 +1,4 @@
+'use strict';
 
 $(function() {
   $.ajax({
@@ -54,25 +55,29 @@ $(function() {
 	});
 });
 
-/* create page add new option */
-// $(function() {
-//   $('.btn').click(fucntion( {
-//
-//   }));
-// });
-$(document).ready(function(){
- var i=1;
-$("#add_row").click(function(){
- $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Option' class='form-control input-md'  /> </td>");
 
- $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
- i++;
-});
-$("#delete_row").click(function(){
-  if(i>1){
-$("#addr"+(i-1)).html('');
-i--;
-}
-});
+
+$(document).ready(function(){
+  /* '/new': add & delete rows */
+  var i=1;
+  $("#add_row").click(function(){
+    $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='option"+i+"' type='text' placeholder='Option' class='form-control input-md option'  /> </td>");
+
+    $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+    i++;
+  });
+  $("#delete_row").click(function(){
+    if(i>1){
+      $("#addr"+(i-1)).html('');
+      i--;
+    }
+  });
+
+  /* '/new': get value in the form*/
+  $('#summit').click(function () {
+    let question = $('#question').val();
+    // let option1 = ($());
+  });
+
 
 });

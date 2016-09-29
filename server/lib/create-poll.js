@@ -10,8 +10,9 @@ const generateRandomString = require('./random-string');
 
 module.exports = function createPollQuestion(db, user, pollInput) {
   const question = pollInput.question;
-  console.log(user)
+  console.log(pollInput)
   delete pollInput.question;
+  delete pollInput['newpoll-submit'];
   const qRow = {
     question: question,
     admin_url: `${generateRandomString(12)}`,
