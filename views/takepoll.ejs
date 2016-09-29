@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Decision Maker</title>
+    <title>Decision Maker - Take Poll</title>
+    <!-- External CSS -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
     <link rel="stylesheet" href="/styles/new.css" type="text/css" />
     <link rel="stylesheet" href="/styles/_header.css" type="text/css" />
 
-    <!--external vendor -->
+    <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
+
+    <!-- App JS -->
+    <script type="text/javascript" src="/scripts/poll-effect.js"></script>
+    <script type="text/javascript" src="/scripts/vote-submit.js"></script>
+
 
   </head>
-
   <body>
-
     <header>
       <% include partials/_header %>
     </header>
-
-  <main id="container">
-      <h2><%= result.question %></h2>
-        <h6><%= result.choices[0].choice_name %></h6>
-        <h6><%= result.choices[1].choice_name %></h6>
-        <h6><%= result.choices[2].choice_name %></h6>
-        <h6><%= result.choices[3].choice_name %></h6>
-
-
-  </main>
+    <main id="container">
+      <section id="polloptions">
+        <h1 class="question"><%= result.question %></h1>
+        <ul id="poll-block-list" class="list-unstyled" data-question-id="<%=result.question_id%>">
+          <% result.choices.forEach((row) => { %>
+            <li data-choice-id="<%= row.choice_id %>"><%= row.choice_name %><small><%= row.description %></small></li>
+          <% }); %>
+        </ul>
+      </section>
+      <button id="poll-vote-submit" type="submit">Submit</button>
+    </main>
   </body>
-
 </html>
