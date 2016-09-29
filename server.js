@@ -154,8 +154,14 @@ app.get("/new", (req, res) => {
   } else {
     res.redirect('/');
   }
-
 });
+
+app.post("/graph", (req, res) => {
+  knex.select('preferences').from('votes_by_array').where({
+    question_id: 1
+  }).then(function(resp) {
+    console.log(resp);
+})
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
