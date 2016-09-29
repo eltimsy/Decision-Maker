@@ -20,6 +20,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 // const pgSession   = require('connect-pg-simple')(session);
 const createPoll  = require('./server/lib/create-poll');
+const getPoll     = require('./server/lib/get-poll')
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -120,7 +121,6 @@ app.post('/register', (req, res) => {
 });
 
 app.post("/createpoll", (req, res) => {
-  console.log(req.session.userid)
   createPoll(knex, req.session.userid, req.body);
   res.redirect(303, "/main");
 })
@@ -137,8 +137,22 @@ app.post("/email", (req, res) => {
       console.log(body);
       res.redirect(303,"/");
     })
-
 })
+
+app.route("/polls/voter/:id")
+  .get((req, res) => {
+    const path_id = req.params.id;
+    getPoll(knex, path_id)
+      .then((result) => {
+        console.log(result)
+        res.render("takepoll", {
+          result: result
+        });
+      })
+      .catch((error) => {
+        console.log(`Poll could not be recovered: ${error}.`);
+      });
+  })
 
 app.get("/main", (req, res) => {
 //todo: get user_id from cookie and assign values here
