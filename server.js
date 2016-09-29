@@ -135,7 +135,8 @@ app.get("/main", (req, res) => {
       .where('user_id', req.session.userid)
       .then(function(result) {
         res.render("main", {
-          questions: result
+          questions: result,
+          username: req.session.username
         });
     });
   } else {
@@ -147,7 +148,7 @@ app.get("/main", (req, res) => {
 app.get("/new", (req, res) => {
   if(req.session.auth === true) {
     res.render("new", {
-      userName: req.session.user
+      username: req.session.username
     });
   } else {
     res.redirect('/');
