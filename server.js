@@ -60,6 +60,9 @@ app.use(express.static("public"));
 // app.use("/api/users", usersRoutes(knex));
 
 // Home page
+app.get("/", (req, res) => {
+  res.render("index");
+});
 
 app.post('/logout', (req, res) => {
   req.session.user = null;
@@ -83,23 +86,30 @@ app.post('/login', (req, res) => {
       console.log("success!");
     }
 
-  })
+  });
   res.redirect('/main');
-})
+});
 
 app.get('/auth', (req, res) => {
   res.json({
     username: req.session.user,
     password: req.session.password
   });
-})
-
-app.get("/", (req, res) => {
-  res.render("index");
 });
 
-app.get("/user_id/history", (req, res) => {
-
+app.post('/register', (req, res) => {
+  let entry = {
+    firstname: 'Johnson',
+    lastname: 'Doe',
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password
+  };
+  knex('users').insert(entry)
+  .returning('user_id')
+  .then((user_id) => {
+      res.redirect(303, '/main');
+  });
 });
 
 app.post("/createpoll", (req, res) => {
@@ -126,7 +136,7 @@ app.get("/main", (req, res) => {
 //todo: get user_id from cookie and assign values here
   knex.select('question')
     .from('questions')
-    .where('user_id', 3)
+    .where('user_id', 2)
     .then(function(result) {
       res.render("main", {
         questions: result
