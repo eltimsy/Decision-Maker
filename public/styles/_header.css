@@ -1,6 +1,6 @@
 nav {
   position: fixed;
-  height: 80px;
+  height: 13%;
   width: 100%;
   background: #e6f0ff;
   color: #e8fdff;
@@ -13,7 +13,7 @@ nav {
 }
 
 nav img.logo {
-  width: 10%;
+  width: 7%;
   margin-top: -1%;
 }
 
