@@ -155,45 +155,57 @@ app.get("/new", (req, res) => {
   }
 });
 
-app.get("/test", (req, res) => {
+app.post("/test", (req, res) => {
   let result = [];
   let choices = [];
   let poll = [];
   let max = 0;
   let name = "";
-  getPoll(knex, 'cvvi9eeferiemd,vnzpfd90i').then(
-    function(resp){
-      poll = resp;
-      knex.select().from('votes_by_array').where({
-        question_id: 1
-      }).then(function(resp) {
-        result = borda.bordaCount(1, resp);
-        console.log(poll);
-        for(let key in result) {
-          poll.choices.forEach(function(index){
-            if(key === index.choice_id){
-              choices.push(index.choice_name);
-              if(max < result[key]){
-                max = result[key];
-                name = index.choice_name;
-              }
-            }
-          });
+  let pollquestion = Object.keys(req.body);
+  let pollurl = "";
+  let questionid = "";
+  console.log(pollquestion);
+  knex.select('poll_url', 'question_id').from('questions').where({
+    question: pollquestion[0]
+  }).then(function(resp) {
 
-        }
-        console.log(name, max);
-        let vote = Object.keys(result).map(function (key) {
-          return result[key];
+    pollurl = resp[0].poll_url;
+    questionid = resp[0].question_id;
+    console.log(pollurl, questionid)
+    getPoll(knex, pollurl).then(
+      function(resp){
+        poll = resp;
+        knex.select().from('votes_by_array').where({
+          question_id: questionid
+        }).then(function(resp) {
+          result = borda.bordaCount(questionid, resp);
+          for(let key in result) {
+            poll.choices.forEach(function(index){
+              if(key === index.choice_id){
+                choices.push(index.choice_name);
+                if(max < result[key]){
+                  max = result[key];
+                  name = index.choice_name;
+                }
+              }
+            });
+
+          }
+          let vote = Object.keys(result).map(function (key) {
+            return result[key];
+          });
+          res.send([vote, choices, poll.question, name])
+          // res.render("test", {
+          //   vote: vote,
+          //   choices: JSON.stringify(choices),
+          //   question: JSON.stringify(poll.question),
+          //   username: req.session.username
+          // });
         });
-        console.log(vote);
-        res.render("test", {
-          vote: vote,
-          choices: JSON.stringify(choices),
-          question: JSON.stringify(poll.question)
-        });
-      });
-    }
-  )
+      }
+    )
+  })
+
 
 })
 
