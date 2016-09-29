@@ -5,3 +5,13 @@ body {
 body main#container {
   margin-top: 11%;
 }
+
+body main#container div.question {
+  width: 100%;
+  margin-left: 25%;
+}
+
+body main#container div.row {
+  width: 50%;
+  margin-left: 25%;
+}
