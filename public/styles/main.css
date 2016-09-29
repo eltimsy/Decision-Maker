@@ -5,3 +5,8 @@ body {
 body main#container {
   margin-top: 11%;
 }
+
+body main#container div#history {
+  float: right;
+  margin-left: 60%;
+}
