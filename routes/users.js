@@ -1,8 +1,8 @@
-"use strict";
-
-const express = require('express');
-const router  = express.Router();
-
+// "use strict";
+//
+// const express = require('express');
+// const router  = express.Router();
+//
 // module.exports = (knex) => {
 //
 //   router.get("/", (req, res) => {
@@ -15,4 +15,6 @@ const router  = express.Router();
 //   });
 //
 //   return router;
+//
+//
 // }
