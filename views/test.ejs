@@ -16,8 +16,26 @@
 
     <header>
       <% include partials/_header %>
+
     </header>
-
   </body>
+    <br><br><br><br><br>
+    <div id="myDiv" style="width: 480px; height: 400px;"></div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+    var data = [{
+      x: <%- choices %>,
+      y: [<%= vote %>],
+      type: 'bar',
+      marker: {
+        color: 'rgb(52,28,173)'
+      }
+    }];
 
+    var layout = {
+      title: <%- question %>
+    }
+
+    Plotly.newPlot('myDiv', data, layout);
+    </script>
 </html>

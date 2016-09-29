@@ -23,8 +23,8 @@ const getPoll     = require('./server/lib/get-poll')
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
-const login        = require('./routes/login');
-
+const login       = require('./routes/login');
+const borda       = require('./server/lib/borda-count.js');
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -142,12 +142,48 @@ app.get("/new", (req, res) => {
   }
 });
 
-// app.post("/graph", (req, res) => {
-//   knex.select('preferences').from('votes_by_array').where({
-//     question_id: 1
-//   }).then(function(resp) {
-//     console.log(resp);
-// });
+app.get("/test", (req, res) => {
+  let result = [];
+  let choices = [];
+  let poll = [];
+  getPoll(knex, 'cvvi9eeferiemd,vnzpfd90i').then(
+    function(resp){
+      poll = resp;
+      knex.select().from('votes_by_array').where({
+        question_id: 1
+      }).then(function(resp) {
+        result = borda.bordaCount(1, resp);
+        console.log(poll);
+        for(let key in result) {
+           poll.choices.forEach(function(index){
+             if(key === index.choice_id){
+               choices.push(index.choice_name);
+             }
+          });
+        }
+        console.log(choices);
+        let vote = Object.keys(result).map(function (key) {
+          return result[key];
+        });
+        console.log(vote);
+        res.render("test", {
+          vote: vote,
+          choices: JSON.stringify(choices),
+          question: JSON.stringify(poll.question)
+        });
+      });
+    }
+  )
+
+})
+
+app.post("/graph", (req, res) => {
+  knex.select().from('votes_by_array').where({
+    question_id: 1
+  }).then(function(resp) {
+    console.log(resp);
+  });
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
