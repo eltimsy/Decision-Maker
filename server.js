@@ -19,12 +19,14 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const createPoll  = require('./server/lib/create-poll');
-const getPoll     = require('./server/lib/get-poll')
+const getPoll     = require('./server/lib/get-poll');
+const regVote     = require('./server/lib/register-votes');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const login       = require('./routes/login');
 const borda       = require('./server/lib/borda-count.js');
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -114,6 +116,16 @@ app.route("/polls/voter/:id")
         console.log(`Poll could not be recovered: ${error}.`);
       });
   })
+  .post((req, res) => {
+    regVote(knex, req.body)
+      .then((result) => {
+        res.redirect(303, "/main");
+      })
+      .catch((error) => {
+        console.log(error);
+        res.redirect(500, "/main")
+      })
+  })
 
 app.get("/main", (req, res) => {
 //todo: get user_id from cookie and assign values here
@@ -123,7 +135,8 @@ app.get("/main", (req, res) => {
       .where('user_id', req.session.userid)
       .then(function(result) {
         res.render("main", {
-          questions: result
+          questions: result,
+          username: req.session.username
         });
     });
   } else {
@@ -135,7 +148,7 @@ app.get("/main", (req, res) => {
 app.get("/new", (req, res) => {
   if(req.session.auth === true) {
     res.render("new", {
-      userName: req.session.user
+      username: req.session.username
     });
   } else {
     res.redirect('/');
@@ -146,6 +159,8 @@ app.get("/test", (req, res) => {
   let result = [];
   let choices = [];
   let poll = [];
+  let max = 0;
+  let name = "";
   getPoll(knex, 'cvvi9eeferiemd,vnzpfd90i').then(
     function(resp){
       poll = resp;
@@ -155,13 +170,18 @@ app.get("/test", (req, res) => {
         result = borda.bordaCount(1, resp);
         console.log(poll);
         for(let key in result) {
-           poll.choices.forEach(function(index){
-             if(key === index.choice_id){
-               choices.push(index.choice_name);
-             }
+          poll.choices.forEach(function(index){
+            if(key === index.choice_id){
+              choices.push(index.choice_name);
+              if(max < result[key]){
+                max = result[key];
+                name = index.choice_name;
+              }
+            }
           });
+
         }
-        console.log(choices);
+        console.log(name, max);
         let vote = Object.keys(result).map(function (key) {
           return result[key];
         });
