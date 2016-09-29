@@ -10,8 +10,27 @@ body main#container div.container {
   margin-top: 20%;
 }
 
-body main#container div.container #newpoll-summit {
+body main#container div.container div.new-poll {
+  float: right;
+  width: 70%;
+}
+
+body main#container div.container div.new-poll #newpoll-submit {
   width: 15%;
   margin-left: 38%;
-  background: #73a4f4;
+  background: white;
+  border: 0.1em solid grey;
+  margin-left: 38%;
+}
+
+body main#container div.container div.email-list {
+  float: left;
+  margin-left: -10%;
+  width: 33%;
+}
+
+body main#container div.container div.email-list #email-list-submit {
+  background: white;
+  border: 0.1em solid grey;
+  margin-left: 20%;
 }

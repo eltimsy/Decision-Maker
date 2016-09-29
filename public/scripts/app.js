@@ -60,23 +60,36 @@ $(function() {
 $(document).ready(function(){
   /* '/new': add & delete rows */
   var i=1;
-  $("#add_row").click(function(){
-    $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='option"+i+"' type='text' placeholder='Option' class='form-control input-md option'  /> </td>");
+  $("#add_row1").click(function(){
+    $('#opp'+i).html("<td>"+ (i+1) +"</td><td><input name='option"+i+"' type='text' placeholder='Option' class='form-control input-md option'  /> </td>");
 
-    $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+    $('#tab_logic1').append('<tr id="opp'+(i+1)+'"></tr>');
     i++;
   });
-  $("#delete_row").click(function(){
+  $("#delete_row1").click(function(){
     if(i>1){
-      $("#addr"+(i-1)).html('');
+      $("#opp"+(i-1)).html('');
       i--;
     }
   });
 
-  /* '/new': get value in the form*/
-  $('#summit').click(function () {
-    let question = $('#question').val();
-    // let option1 = ($());
+//add and delete rows for email list
+  $("#add_row2").click(function(){
+    $('#email'+i).html("<td>"+ (i+1) +"</td><td><input name='option"+i+"' type='text' placeholder='Option' class='form-control input-md option'  /> </td>");
+
+    $('#tab_logic2').append('<tr id="email'+(i+1)+'"></tr>');
+    i++;
+  });
+  $("#delete_row2").click(function(){
+    if(i>1){
+      $("#email"+(i-1)).html('');
+      i--;
+    }
+  });
+
+  /* todo: '/new' prevent blank input*/
+  $('.add_row').click(function () {
+
   });
 
 
