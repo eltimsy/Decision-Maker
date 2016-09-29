@@ -61,12 +61,19 @@ app.use(express.static("public"));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  console.log(req.session.username)
+  if(req.session.auth === true){
+    res.redirect('/main');
+  } else {
+    res.render("index");
+  }
 });
 
 app.post('/logout', (req, res) => {
-  req.session.user = null;
-  res.end();
+  req.session.destroy(function(err) {
+    res.redirect('/');
+  })
+
 });
 
 app.post('/login', (req, res) => {
@@ -79,22 +86,24 @@ app.post('/login', (req, res) => {
   }).then(function(resp){
     if(resp.length < 1){
       console.log("fail")
+      res.redirect('/');
     } else {
-      req.session.authenicate = true;
+      req.session.auth = true;
       req.session.username = req.body.username;
       console.log(resp);
       console.log("success!");
+      res.redirect('/main');
     }
 
   });
-  res.redirect('/main');
 });
 
 app.get('/auth', (req, res) => {
-  res.json({
-    username: req.session.user,
-    password: req.session.password
-  });
+  if(req.session.auth === true){
+    res.redirect('/main');
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.post('/register', (req, res) => {
@@ -113,7 +122,7 @@ app.post('/register', (req, res) => {
 });
 
 app.post("/createpoll", (req, res) => {
-  createPoll(knex, req.session.user, req.body);
+  createPoll(knex, req.session.username, req.body);
   res.redirect(303, "/main");
 })
 
@@ -134,15 +143,18 @@ app.post("/email", (req, res) => {
 
 app.get("/main", (req, res) => {
 //todo: get user_id from cookie and assign values here
-  knex.select('question')
-    .from('questions')
-    .where('user_id', 2)
-    .then(function(result) {
-      res.render("main", {
-        questions: result
-      });
-  });
-
+  if(req.session.auth === true){
+    knex.select('question')
+      .from('questions')
+      .where('user_id', 2)
+      .then(function(result) {
+        res.render("main", {
+          questions: result
+        });
+    });
+  } else {
+    res.redirect('/');
+  }
 
 });
 
