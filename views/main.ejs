@@ -33,8 +33,12 @@
     <div id="history">
 
       <% questions.forEach((ques) => { %>
-      <article class="past-polls">
-        <h2 class="poll-title"><%= ques.question %></h2>
+        <div class="panel panel-primary">
+          <div class="panel-heading">  <%= ques.question %> </div>
+            <div class="panel-body">
+              Results:
+            </div>
+          </div>
         <button class="delete" type="summit">delete</button>
       </article>
       <% }) %>

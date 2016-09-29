@@ -3,10 +3,12 @@ body {
 }
 
 body main#container {
-  margin-top: 11%;
+  margin-top: 100px;
 }
 
 body main#container div#history {
   float: right;
-  margin-left: 60%;
+  margin-left: 10%;
+  margin-right: 10px;
+  width: 250px;
 }

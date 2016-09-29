@@ -146,6 +146,7 @@ app.get("/test", (req, res) => {
   let result = [];
   let choices = [];
   let poll = [];
+  let max = 0;
   getPoll(knex, 'cvvi9eeferiemd,vnzpfd90i').then(
     function(resp){
       poll = resp;
