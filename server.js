@@ -134,9 +134,10 @@ app.get("/main", (req, res) => {
       .from('questions')
       .where('user_id', req.session.userid)
       .then(function(result) {
-        console.log(result)
+        const liveQuestions = result;
+        knex.select()
         res.render("main", {
-          questions: result,
+          questions: liveQuestions,
           username: req.session.username
         });
     });
