@@ -11,7 +11,7 @@
     <!--external vendor -->
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
 
-    <script></script>
+    <script type="text/javascript" src="/scripts/create-graph.js"></script>
     <script></script>
 
 
@@ -33,7 +33,7 @@
     <div id="history">
 
       <% questions.forEach((ques) => { %>
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" data-question="<%= ques.question %>">
           <div class="panel-heading">  <%= ques.question %> </div>
             <div class="panel-body">
               Results:
