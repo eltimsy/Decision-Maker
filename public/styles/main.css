@@ -8,6 +8,38 @@ body {
   color: black;
 }
 
+body main#poll-container {
+  cursor: unset;
+  max-width: 500px;
+  min-width: 400px;
+  margin: auto;
+  background-color: white;
+  overflow: auto;
+  position: relative;
+  top: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+body main#poll-container h1 {
+  border-bottom: 3px solid black;
+}
+
+body main#poll-container ul#poll-block-list li {
+  margin: 10px 10px 10px 10px;
+  padding: 20px 20px 20px 20px;
+  font-weight: 300;
+  font-size: 24px;
+}
+
+body main#poll-container button#poll-vote-submit {
+  background-color: white;
+  font-weight: bolder;
+}
+
 body main#container {
   margin-top: 120px;
 }

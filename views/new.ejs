@@ -22,10 +22,10 @@
 
 <main id="container">
       <div class="container">
-    <div class="row clearfix">
+    <div class="row clearfix new-poll">
 		<div class="col-md-12 column">
       <form id="newpoll" action="/createpoll" method="post" role="form">
-  			<table class="table table-bordered table-hover" id="tab_logic">
+  			<table class="table table-bordered table-hover" id="tab_logic1">
   				<thead>
   					<tr >
   						<th class="text-center">
@@ -37,7 +37,7 @@
   					</tr>
   				</thead>
   				<tbody>
-  					<tr id='addr0'>
+  					<tr id='opp0'>
   						<td>
   						1
   						</td>
@@ -45,13 +45,44 @@
   						<input type="text" name='option0'  placeholder='Option' class="form-control option"/>
   						</td>
   					</tr>
-                      <tr id='addr1'></tr>
+                      <tr id='opp1'></tr>
   				</tbody>
   			</table>
-        <a id="add_row" class="btn btn-default pull-left">+</a><input type="submit" name="newpoll-submit" id="newpoll-submit" class="btn btn-register" value="Summit"><a id='delete_row' class="pull-right btn btn-default">-</a>
+        <a id="add_row1" class="btn btn-default pull-left">+</a><input type="submit" name="newpoll-submit" id="newpoll-submit" class="btn btn-register" value="Summit"><a id='delete_row1' class="pull-right btn btn-default">-</a>
       </form>
 		</div>
 	</div>
+
+  <div class="row clearfix email-list">
+  <div class="col-md-12 column">
+    <form id="email-list-form" action="/emaillist" method="post" role="form">
+      <table class="table table-bordered table-hover" id="tab_logic2">
+        <thead>
+          <tr >
+            <th class="text-center">
+              #
+            </th>
+            <th class="text-center">
+              Send the poll to your friends:
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id='email0'>
+            <td>
+            1
+            </td>
+            <td>
+            <input type="text" name='email0'  placeholder='email address' class="form-control option"/>
+            </td>
+          </tr>
+                    <tr id='email1'></tr>
+        </tbody>
+      </table>
+      <a id="add_row2" class="btn btn-default pull-left">+</a><input type="submit" name="newpoll-submit" id="email-list-submit" class="btn btn-register" value="Done"><a id='delete_row2' class="pull-right btn btn-default">-</a>
+    </form>
+  </div>
+</div>
 
 
 </div>

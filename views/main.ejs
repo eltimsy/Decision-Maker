@@ -33,15 +33,21 @@
     </div>
 
     <div id="history">
-
-      <% questions.forEach((ques) => { %>
-        <div class="panel panel-primary" data-question="<%= ques.question %>">
-          <div class="panel-heading">  <%= ques.question %> </div>
-            <div class="panel-body">
-              Results:
-            </div>
+      <div id="new-poll">
+        <a href="/new">Create a new poll?</a>
+      </div>
+      <% questions.forEach((questionName) => { %>
+        <div class="panel panel-primary" data-question="<%= questionName.question %>">
+          <div class="panel-heading">
+            <%= questionName.question %>
           </div>
-        <button class="delete" type="summit">delete</button>
+          <div class="panel-body">
+            Results Placeholder.
+          </div>
+          <div class="panel-footer">
+            <button class="delete" type="summit">delete</button>
+          </div>
+        </div>
       </article>
       <% }) %>
     </div>
