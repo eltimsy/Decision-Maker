@@ -80,16 +80,17 @@ app.post('/login', (req, res) => {
   console.log(req.body)
   let user = req.body.username;
   let password = req.body.password;
-  knex.select('username','password').from('users').where({
+  knex.select('username','password','user_id').from('users').where({
     username: user,
     password: password
-  }).then(function(resp){
-    if(resp.length < 1){
+  }).then(function(resp) {
+    if(resp.length < 1) {
       console.log("fail")
       res.redirect('/');
     } else {
       req.session.auth = true;
       req.session.username = req.body.username;
+      req.session.userid = req.body.user_id;
       console.log(resp);
       console.log("success!");
       res.redirect('/main');
@@ -99,7 +100,7 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  if(req.session.auth === true){
+  if(req.session.auth === true) {
     res.redirect('/main');
   } else {
     res.redirect('/');
@@ -122,7 +123,7 @@ app.post('/register', (req, res) => {
 });
 
 app.post("/createpoll", (req, res) => {
-  createPoll(knex, req.session.username, req.body);
+  createPoll(knex, req.session.userid, req.body);
   res.redirect(303, "/main");
 })
 
