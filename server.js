@@ -98,6 +98,11 @@ app.get('/auth', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
+  let username = req.body.username;
+  const ifUsernameExist = (username) => {
+    knex('users')
+  }
+
   let entry = {
     firstname: 'Johnson',
     lastname: 'Doe',
@@ -106,7 +111,7 @@ app.post('/register', (req, res) => {
     password: req.body.password
   };
   knex('users').insert(entry)
-  .returning('user_id')
+  .returning(user_id)
   .then((user_id) => {
       res.redirect(303, '/main');
   });
