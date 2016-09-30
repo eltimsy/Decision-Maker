@@ -136,7 +136,7 @@ app.route("/polls/voter/:id")
         console.log(result)
         res.render("takepoll", {
           result: result,
-          username: req.session.username
+          username: req.session.username || 'Guest'
         });
       })
       .catch((error) => {
