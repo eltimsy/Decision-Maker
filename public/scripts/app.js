@@ -1,18 +1,4 @@
 'use strict';
-/*function checkUser() {
-  $.ajax({
-    url: '/auth',
-    method: 'get',
-    success: function(data) {
-      if(!data.username) {
-      } else {
-      }
-    },
-    error: function(request, status, error) {
-      alert(request.responseText);
-    }
-  });
-}*/
 
 /* Login page panel switch*/
 $(function() {
@@ -64,13 +50,13 @@ $(function() {
     ev.preventDefault();
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
-    console.log(username);
-    console.log(password);
     let login = {
       username: username,
       password: password
     }
-    console.log(login);
+
+    $('.error').text('');
+    $('.error').fadeIn();
     $.ajax({
       url: '/home/login',
       method: 'post',
@@ -79,6 +65,8 @@ $(function() {
       if(data !== 'fail') {
         window.location = "/main";
       }
+      $('.error').text("Invalid username or password");
+      $('.error').fadeOut(1500);
     }).fail(function(data){
     });
   });
