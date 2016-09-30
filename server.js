@@ -109,7 +109,8 @@ app.route("/polls/voter/:id")
       .then((result) => {
         console.log(result)
         res.render("takepoll", {
-          result: result
+          result: result,
+          username: req.session.username
         });
       })
       .catch((error) => {
@@ -166,17 +167,17 @@ app.post("/test", (req, res) => {
   let pollquestion = Object.keys(req.body);
   let pollurl = "";
   let questionid = "";
-  console.log(pollquestion);
+
   knex.select('poll_url', 'question_id').from('questions').where({
     question: pollquestion[0]
   }).then(function(resp) {
-
     pollurl = resp[0].poll_url;
     questionid = resp[0].question_id;
-    console.log(pollurl, questionid)
+
     getPoll(knex, pollurl).then(
       function(resp){
         poll = resp;
+
         knex.select().from('votes_by_array').where({
           question_id: questionid
         }).then(function(resp) {
@@ -191,25 +192,17 @@ app.post("/test", (req, res) => {
                 }
               }
             });
-
           }
+
           let vote = Object.keys(result).map(function (key) {
             return result[key];
           });
           res.send([vote, choices, poll.question, name])
-          // res.render("test", {
-          //   vote: vote,
-          //   choices: JSON.stringify(choices),
-          //   question: JSON.stringify(poll.question),
-          //   username: req.session.username
-          // });
         });
       }
-    )
-  })
-
-
-})
+    );
+  });
+});
 
 app.post("/graph", (req, res) => {
   knex.select().from('votes_by_array').where({
