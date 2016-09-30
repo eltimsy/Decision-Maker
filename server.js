@@ -23,6 +23,7 @@ const getPoll     = require('./server/lib/get-poll');
 const regVote     = require('./server/lib/register-votes');
 
 // Seperated Routes for each Resource
+const usersRoutes = require("./routes/users");
 const login       = require('./routes/login');
 const borda       = require('./server/lib/borda-count.js');
 
@@ -85,50 +86,21 @@ app.get('/auth', (req, res) => {
 app.post("/createpoll", (req, res) => {
   createPoll(knex, req.session.userid, req.body);
   setTimeout(function(){res.redirect(303, "/main");},1000);
-
-  function sendCongratsEmail(email, admin_url, poll_url){
-    var data = {
-      from: 'RocketVoters <rocketvoters@rendition.club>',
-      to: email,
-      subject: "Congrats!Here are the links for your new poll!",
-      text: `See your poll here: ${admin_url} \n
-             Invite your friends to vote here: localhost:8080/polls/voter/${poll_url}`
-
-    };
-    mailgun
-      .messages()
-      .send(data, function (error, body) {
-        console.log(body);
-      });
-  }
-
-  var userId = req.session.userid;
-  console.log('for createpoll post, userID is:', userId);
-  knex.select()
-  .from('users')
-  .innerJoin('questions', 'users.user_id', "questions.user_id")
-  .where({'users.user_id': userId})
-  .orderBy('question_id', 'desc')
-  .first('email', 'admin_url', 'poll_url')
-  .then((result) => {
-    sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
-  });
-});
+})
 
 app.post("/email", (req, res) => {
   var data = {
     from: `${req.body.name} <${email}>`,
     to: req.body.mail,
-    subject: "Congrats!Here are the links for your new poll!",
+    subject: "It's a URL",
     text: req.body.comment
-  };
+  }
   mailgun.messages()
     .send(data, function (error, body) {
       console.log(body);
       res.redirect(303,"/");
-    });
-});
-
+    })
+})
 
 app.route("/polls/voter/:id")
   .get((req, res) => {
@@ -158,12 +130,14 @@ app.route("/polls/voter/:id")
 
 app.get("/main", (req, res) => {
   if(req.session.auth === true) {
-    knex.select()
+    knex.select('question', 'question_id')
       .from('questions')
       .where('user_id', req.session.userid)
       .orderBy('question_id', 'desc')
       .then(function(result) {
-        const liveQuestions = result;
+        const liveQuestions = result.map((value) => {
+          return value.question;
+        });
         knex.select()
         res.render("main", {
           questions: liveQuestions,
@@ -205,6 +179,7 @@ app.post("/graph", (req, res) => {
     getPoll(knex, pollurl).then(
       function(resp){
         poll = resp;
+
         knex.select().from('votes_by_array').where({
           question_id: questionid
         }).then(function(resp) {
@@ -219,19 +194,17 @@ app.post("/graph", (req, res) => {
                 }
               }
             });
-
           }
+
           let vote = Object.keys(result).map(function (key) {
             return result[key];
           });
           res.send([vote, choices, poll.question, name])
         });
       }
-    )
-  })
-
-
-})
+    );
+  });
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
