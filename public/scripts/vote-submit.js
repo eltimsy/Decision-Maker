@@ -8,7 +8,7 @@ $('document').ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "/polls/voter",
+      url: url,
       data: voteData,
       error: function(error) {
         console.log('AJAX POST error:', error);

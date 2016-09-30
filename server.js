@@ -129,6 +129,11 @@ app.post("/email", (req, res) => {
     })
 })
 
+/* Explanation of the (slight) callback hell below. The ajax call from the
+poll heads to this route, which first will check the email address for
+validity (function checkVoter), and then will submit the vote (function
+regVote). */
+
 app.route("/polls/voter/:id")
   .get((req, res) => {
     const path_id = req.params.id;
@@ -144,13 +149,6 @@ app.route("/polls/voter/:id")
         console.log(`Poll could not be recovered: ${error}.`);
       });
   })
-
-/* Explanation of the (slight) callback hell below. The ajax call from the
-poll heads to this route, which first will check the email address for
-validity (function checkVoter), and then will submit the vote (function
-regVote). */
-
-app.route("/polls/voter")
   .post((req, res) => {
     console.log(req.body)
     checkVoter(knex, req.body)
@@ -181,7 +179,6 @@ app.get("/main", (req, res) => {
         const liveQuestions = result.map((value) => {
           return value.question;
         });
-        console.log(liveQuestions);
         res.render("main", {
           questions: liveQuestions,
           username: req.session.username
