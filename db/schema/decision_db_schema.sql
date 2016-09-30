@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS session CASCADE;
 
 CREATE TABLE users (
   user_id bigserial PRIMARY KEY,
-  username varchar(100), NOT NULL,
+  username varchar(100) NOT NULL,
   password varchar(100) NOT NULL,
   email varchar(100) NOT NULL
 );
