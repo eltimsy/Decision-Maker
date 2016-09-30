@@ -185,7 +185,7 @@ app.get("/new", (req, res) => {
   }
 });
 
-app.post("/test", (req, res) => {
+app.post("/graph", (req, res) => {
   let result = [];
   let choices = [];
   let poll = [];
@@ -194,14 +194,13 @@ app.post("/test", (req, res) => {
   let pollquestion = Object.keys(req.body);
   let pollurl = "";
   let questionid = "";
-  console.log(pollquestion);
+
   knex.select('poll_url', 'question_id').from('questions').where({
     question: pollquestion[0]
   }).then(function(resp) {
-
     pollurl = resp[0].poll_url;
     questionid = resp[0].question_id;
-    console.log(pollurl, questionid)
+  
     getPoll(knex, pollurl).then(
       function(resp){
         poll = resp;
@@ -225,12 +224,6 @@ app.post("/test", (req, res) => {
             return result[key];
           });
           res.send([vote, choices, poll.question, name])
-          // res.render("test", {
-          //   vote: vote,
-          //   choices: JSON.stringify(choices),
-          //   question: JSON.stringify(poll.question),
-          //   username: req.session.username
-          // });
         });
       }
     )
@@ -238,14 +231,6 @@ app.post("/test", (req, res) => {
 
 
 })
-
-app.post("/graph", (req, res) => {
-  knex.select().from('votes_by_array').where({
-    question_id: 1
-  }).then(function(resp) {
-    console.log(resp);
-  });
-});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
