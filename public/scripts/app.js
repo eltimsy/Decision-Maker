@@ -1,15 +1,5 @@
 'use strict';
 
-$(function() {
-  $.ajax({
-    method: "GET",
-    url: "/api/users"
-  }).done((users) => {
-    for(user of users) {
-      $("<div>").text(user.name).appendTo($("body"));
-    }
-  });
-
   /*$('.login').on('submit','.login-form', function(ev) {
     let login = $(this).serialize();
     ev.preventDefault();
@@ -20,7 +10,7 @@ $(function() {
     }).done(function(data) {
     });
   });*/
-});
+
 
 /*function checkUser() {
   $.ajax({
