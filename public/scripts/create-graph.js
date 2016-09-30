@@ -30,7 +30,16 @@ $(document).ready(function() {
       }];
 
       var layout = {
-        title: title
+        title: title,
+        width: 700,
+        height: 500,
+        font: {
+          family: 'Courier New, monospace',
+          size: 25,
+          color: 'teal'
+        },
+        paper_bgcolor: '#eceef7',
+        plot_bgcolor: 'white'
       }
       setTimeout(() => Plotly.newPlot('myDiv', data, layout));
     });

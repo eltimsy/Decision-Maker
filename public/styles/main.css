@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  background-color: white;
+  background-color: #eceef7;
   color: black;
 }
 
@@ -49,6 +49,15 @@ body main#container div#history {
   margin-left: 10%;
   margin-right: 10px;
   width: 250px;
+}
+
+body main#container div#history div.panel {
+  border-color: #1b351b;
+}
+
+body main#container div#history div.panel div.panel-heading {
+  background: #1b351b;
+  border-color: #1b351b;
 }
 
 #myDiv {

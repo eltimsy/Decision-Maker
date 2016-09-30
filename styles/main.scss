@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  background-color: white;
+  background-color: #eceef7;
   color: black;
 
   main#poll-container {
@@ -45,16 +45,11 @@ body {
       margin-left: 10%;
       margin-right: 10px;
       width: 250px;
-
-      article.past-polls {
-
-
-        h2 {
-
-        }
-
-        button {
-
+      div.panel{
+        border-color: #1b351b;
+        div.panel-heading {
+          background:#1b351b;
+          border-color: #1b351b;
         }
       }
     }
