@@ -50,3 +50,8 @@ body main#container div#history {
   margin-right: 10px;
   width: 250px;
 }
+
+#myDiv {
+  float: left;
+  margin-left: 20px;
+}

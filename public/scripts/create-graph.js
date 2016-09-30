@@ -15,14 +15,14 @@ $(document).ready(function() {
       title = data[2];
       winner = data[3];
       console.log(voteresult, votechoice, title, winner);
+      $('div.poll-container').empty();
       let $graph = $(`
         <div id="myDiv" style="width: 480px; height: 400px;"></div>
       `);
-      $('div#history').append($graph);
-
+      $('div.poll-container').append($graph);
       var data = [{
-        x: [votechoice],
-        y: [voteresult],
+        x: votechoice,
+        y: voteresult,
         type: 'bar',
         marker: {
           color: 'rgb(52,28,173)'
