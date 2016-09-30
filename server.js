@@ -23,7 +23,6 @@ const getPoll     = require('./server/lib/get-poll');
 const regVote     = require('./server/lib/register-votes');
 
 // Seperated Routes for each Resource
-const usersRoutes = require("./routes/users");
 const login       = require('./routes/login');
 const borda       = require('./server/lib/borda-count.js');
 
@@ -86,7 +85,6 @@ app.get('/auth', (req, res) => {
 app.post("/createpoll", (req, res) => {
   createPoll(knex, req.session.userid, req.body);
   setTimeout(function(){res.redirect(303, "/main");},1000);
-})
 
   function sendCongratsEmail(email, admin_url, poll_url){
     var data = {
