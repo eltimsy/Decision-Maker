@@ -26,13 +26,22 @@ body {
     }
     ul#poll-block-list {
       li {
+        background-color: #ed8e9a;
+        border-radius: 10px;
         margin: 10px 10px 10px 10px;
         padding: 20px 20px 20px 20px;
         font-weight: 300;
         font-size: 24px;
       }
     }
+    div#poll-vote-confirm {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
     button#poll-vote-submit {
+      margin: 10px 10px 10px 10px;
       background-color: white;
       font-weight: bolder;
     }
@@ -56,6 +65,8 @@ body {
 
   }
 }
+
+
 
 #myDiv {
   float: left;
