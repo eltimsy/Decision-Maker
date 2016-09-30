@@ -13,8 +13,7 @@ module.exports = (knex) => {
       password: password
     }).then(function(resp) {
       if(resp.length < 1) {
-        console.log("fail")
-        res.redirect('/');
+        res.send('fail');
       } else {
         req.session.auth = true;
         req.session.username = resp[0].username;

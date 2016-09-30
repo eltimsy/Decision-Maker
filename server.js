@@ -23,7 +23,6 @@ const getPoll     = require('./server/lib/get-poll');
 const regVote     = require('./server/lib/register-votes');
 
 // Seperated Routes for each Resource
-const usersRoutes = require("./routes/users");
 const login       = require('./routes/login');
 const borda       = require('./server/lib/borda-count.js');
 
