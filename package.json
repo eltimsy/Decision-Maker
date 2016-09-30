@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/eltimsy/Decision-Maker#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "bootstrap-sass": "^3.3.7",
     "cookie-session": "^2.0.0-alpha.1",

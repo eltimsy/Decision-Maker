@@ -1,5 +1,5 @@
 "use strict";
-
+const bcrypt  = require('bcrypt-nodejs');
 const express = require('express');
 const app  = express.Router();
 
@@ -9,16 +9,23 @@ module.exports = (knex) => {
     let user = req.body.username;
     let password = req.body.password;
     knex.select('username','password','user_id').from('users').where({
-      username: user,
-      password: password
+      username: user
     }).then(function(resp) {
+      console.log(resp);
       if(resp.length < 1) {
         res.send('fail');
       } else {
-        req.session.auth = true;
-        req.session.username = resp[0].username;
-        req.session.userid = Number(resp[0].user_id);
-        res.redirect('/main');
+        console.log(resp[0].password)
+        bcrypt.compare(password, resp[0].password, function(err, response) {
+          if(response == true) {
+            req.session.auth = true;
+            req.session.username = resp[0].username;
+            req.session.userid = Number(resp[0].user_id);
+            res.redirect('/main');
+          } else {
+            res.send('fail');
+          }
+        });
       }
     });
   });
@@ -30,12 +37,12 @@ module.exports = (knex) => {
   });
 //
 app.post('/register', (req, res) => {
+  let password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null);
+  console.log(password.length);
   let entry = {
-    firstname: 'joe',
-    lastname: 'doe',
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password
+    password: password
   };
   function registerNewUser(entry){
     const insertNewUsername = (entry) => {
@@ -46,7 +53,7 @@ app.post('/register', (req, res) => {
         req.session.auth = true;
         req.session.username = req.body.username;
         req.session.userid = Number(resp);
-        res.redirect(303, '/main');
+        res.send('success');
       });
     };
 
@@ -57,7 +64,7 @@ app.post('/register', (req, res) => {
       if (result.length > 0) {
         //todo: create a flash message;
         console.log("This name is already taken!");
-        res.redirect(303, '/')
+        res.send('fail');
       } else {
         insertNewUsername(entry);
       }
