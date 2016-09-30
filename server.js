@@ -21,6 +21,7 @@ const knexLogger  = require('knex-logger');
 const createPoll  = require('./server/lib/create-poll');
 const getPoll     = require('./server/lib/get-poll');
 const regVote     = require('./server/lib/register-votes');
+const checkVoter  = require('./server/lib/check-voter');
 
 // Seperated Routes for each Resource
 const login       = require('./routes/login');
@@ -143,14 +144,30 @@ app.route("/polls/voter/:id")
         console.log(`Poll could not be recovered: ${error}.`);
       });
   })
+
+/* Explanation of the (slight) callback hell below. The ajax call from the
+poll heads to this route, which first will check the email address for
+validity (function checkVoter), and then will submit the vote (function
+regVote). */
+
+app.route("/polls/voter")
   .post((req, res) => {
-    regVote(knex, req.body)
+    console.log(req.body)
+    checkVoter(knex, req.body)
       .then((result) => {
-        res.redirect(303, "/main");
+        regVote(knex, req.body)
+          .then((result) => {
+            console.log(`Success: ${result}`)
+            res.redirect(303, "/main");
+          })
+          .catch((error) => {
+            console.log(error);
+            res.redirect(500, "/main");
+          })
       })
       .catch((error) => {
         console.log(error);
-        res.redirect(500, "/main")
+        res.redirect(500, "/main");
       })
   })
 
