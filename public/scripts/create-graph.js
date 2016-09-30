@@ -31,11 +31,19 @@ $(document).ready(function() {
 
       var layout = {
         title: title,
-        width: 700,
+        height: 500,
+        width: 600,
         font: {
           family: 'Courier New, monospace',
-          size: 25,
+          size: 20,
           color: 'teal'
+        },
+        margin: {
+          l: 50,
+          r: 150,
+          b: 200,
+          t: 100,
+          pad: 4
         },
         paper_bgcolor: '#eceef7',
         plot_bgcolor: 'white'
