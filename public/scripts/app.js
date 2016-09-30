@@ -1,27 +1,4 @@
 'use strict';
-
-$(function() {
-  $.ajax({
-    method: "GET",
-    url: "/api/users"
-  }).done((users) => {
-    for(user of users) {
-      $("<div>").text(user.name).appendTo($("body"));
-    }
-  });
-
-  /*$('.login').on('submit','.login-form', function(ev) {
-    let login = $(this).serialize();
-    ev.preventDefault();
-    $.ajax({
-      url: '/login',
-      method: 'post',
-      data: login
-    }).done(function(data) {
-    });
-  });*/
-});
-
 /*function checkUser() {
   $.ajax({
     url: '/auth',
@@ -53,11 +30,7 @@ $(function() {
 		$(this).addClass('active');
 		e.preventDefault();
 	});
-});
 
-
-
-$(document).ready(function(){
   /* '/new': add & delete rows */
   var i=1;
   $("#add_row1").click(function(){
@@ -86,10 +59,28 @@ $(document).ready(function(){
       i--;
     }
   });
-
   /* todo: '/new' prevent blank input*/
-
-
-
+  $('#login-form').on('click','#login-submit', function(ev) {
+    ev.preventDefault();
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    console.log(username);
+    console.log(password);
+    let login = {
+      username: username,
+      password: password
+    }
+    console.log(login);
+    $.ajax({
+      url: '/home/login',
+      method: 'post',
+      data: login
+    }).done(function(data) {
+      if(data !== 'fail') {
+        window.location = "/main";
+      }
+    }).fail(function(data){
+    });
+  });
 
 });
