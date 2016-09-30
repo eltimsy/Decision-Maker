@@ -164,7 +164,7 @@ app.get("/main", (req, res) => {
         const liveQuestions = result.map((value) => {
           return value.question;
         });
-        knex.select()
+        console.log(liveQuestions);
         res.render("main", {
           questions: liveQuestions,
           username: req.session.username

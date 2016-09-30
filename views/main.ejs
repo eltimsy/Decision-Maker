@@ -37,9 +37,9 @@
         <a href="/new">Create a new poll?</a>
       </div>
       <% questions.forEach((questionName) => { %>
-        <div class="panel panel-primary" data-question="<%= questionName.question %>">
+        <div class="panel panel-primary" data-question="<%= questionName %>">
           <div class="panel-heading">
-            <%= questionName.question %>
+            <%= questionName %>
           </div>
           <div class="panel-body">
             <li><a href="/polls/question/<%= questionName.admin_url %>">See results</a></li>
