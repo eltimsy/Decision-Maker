@@ -32,7 +32,6 @@ $(document).ready(function() {
       var layout = {
         title: title,
         width: 700,
-        height: 500,
         font: {
           family: 'Courier New, monospace',
           size: 25,
