@@ -64,11 +64,49 @@ $(function() {
     }).done(function(data) {
       if(data !== 'fail') {
         window.location = "/main";
+      } else {
+        $('.error').text("Invalid username or password");
+        $('.error').fadeOut(1500);
       }
-      $('.error').text("Invalid username or password");
-      $('.error').fadeOut(1500);
     }).fail(function(data){
     });
+  });
+
+  $('#register-form').on('click','#register-submit', function(ev) {
+    ev.preventDefault();
+    let username = document.getElementById('username2').value;
+    let password = document.getElementById('password2').value;
+    let conpassword = document.getElementById('confirm-password').value;
+    let email = document.getElementById('email2').value;
+    let login = {
+      username: username,
+      password: password,
+      email: email
+    }
+    console.log(login);
+    $('.error').text('');
+    $('.error').fadeIn();
+    if(!username || !password || !email){
+      $('.error').text("Fill out all fields");
+      $('.error').fadeOut(1500);
+    } else if(password !== conpassword) {
+      $('.error').text("Passwords don't match");
+      $('.error').fadeOut(1500);
+    } else {
+      $.ajax({
+        url: '/home/register',
+        method: 'post',
+        data: login
+      }).done(function(data) {
+        if(data !== 'fail') {
+          window.location = "/main";
+        } else {
+          $('.error').text("Username already exists");
+          $('.error').fadeOut(1500);
+        }
+      }).fail(function(data){
+      });
+    }
   });
 
 });

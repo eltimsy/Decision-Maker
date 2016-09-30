@@ -46,7 +46,7 @@ app.post('/register', (req, res) => {
         req.session.auth = true;
         req.session.username = req.body.username;
         req.session.userid = Number(resp);
-        res.redirect(303, '/main');
+        res.send('success');
       });
     };
 
@@ -57,7 +57,7 @@ app.post('/register', (req, res) => {
       if (result.length > 0) {
         //todo: create a flash message;
         console.log("This name is already taken!");
-        res.redirect(303, '/')
+        res.send('fail');
       } else {
         insertNewUsername(entry);
       }
