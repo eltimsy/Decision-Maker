@@ -88,6 +88,34 @@ app.post("/createpoll", (req, res) => {
   setTimeout(function(){res.redirect(303, "/main");},1000);
 })
 
+  function sendCongratsEmail(email, admin_url, poll_url){
+    var data = {
+      from: 'RocketVoters <rocketvoters@rendition.club>',
+      to: email,
+      subject: "Congrats!Here are the links for your new poll!",
+      text: `See your poll here: ${admin_url} \n
+             Invite your friends to vote here: localhost:8080/polls/voter/${poll_url}`
+    };
+    mailgun
+      .messages()
+      .send(data, function (error, body) {
+        console.log(body);
+      });
+  }
+
+  var userId = req.session.userid;
+  console.log('for createpoll post, userID is:', userId);
+  knex.select()
+    .from('users')
+    .innerJoin('questions', 'users.user_id', "questions.user_id")
+    .where({'users.user_id': userId})
+    .orderBy('question_id', 'desc')
+    .first('email', 'admin_url', 'poll_url')
+    .then((result) => {
+      sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
+    });
+  });
+
 app.post("/email", (req, res) => {
   var data = {
     from: `${req.body.name} <${email}>`,
