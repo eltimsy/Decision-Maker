@@ -17,7 +17,13 @@ module.exports = function checkVoter(db, query) {
       })
       .select('voted')
       .then((hasVoted) => {
-        resolve(hasVoted);
+        if (hasVoted.length === 0) {
+          resolve(true);
+        } else if (hasVoted[0].voted) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
       })
       .catch((error) => {
         reject(error);

@@ -2,10 +2,9 @@ $('document').ready(function() {
 
   $('#poll-vote-submit').on('click', function(event) {
     var prefList = $('#poll-block-list').children('li');
-    var email = $('#email-confirm').serialize();
+    var email = $('#email-confirm').val();
     var url = window.location.href;
     var voteData = cleanPref(prefList, email);
-
     $.ajax({
       type: "POST",
       url: url,
@@ -14,7 +13,13 @@ $('document').ready(function() {
         console.log('AJAX POST error:', error);
       },
       success: function(response) {
-        console.log('Ajax POST successful.');
+        if (response) {
+          console.log('Ajax POST successful.');
+          console.log('Vote failed.');
+        } else {
+          console.log('Vote successful.');
+          window.location.replace('/main');
+        }
       }
     });
   });

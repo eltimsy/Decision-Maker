@@ -150,18 +150,20 @@ app.route("/polls/voter/:id")
       });
   })
   .post((req, res) => {
-    console.log(req.body)
     checkVoter(knex, req.body)
       .then((result) => {
-        regVote(knex, req.body)
-          .then((result) => {
-            console.log(`Success: ${result}`)
-            res.redirect(303, "/main");
-          })
-          .catch((error) => {
-            console.log(error);
-            res.redirect(500, "/main");
-          })
+        if (result) {
+          res.send(result);
+        } else {
+          regVote(knex, req.body)
+            .then((result) => {
+              res.send(false);
+            })
+            .catch((error) => {
+              console.log(error);
+              res.redirect(500, "/main");
+            })
+        }
       })
       .catch((error) => {
         console.log(error);
