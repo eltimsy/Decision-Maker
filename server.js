@@ -86,21 +86,50 @@ app.get('/auth', (req, res) => {
 app.post("/createpoll", (req, res) => {
   createPoll(knex, req.session.userid, req.body);
   setTimeout(function(){res.redirect(303, "/main");},1000);
-})
+
+  function sendCongratsEmail(email, admin_url, poll_url){
+    var data = {
+      from: 'RocketVoters <rocketvoters@rendition.club>',
+      to: email,
+      subject: "Congrats!Here are the links for your new poll!",
+      text: `See your poll here: ${admin_url} \n
+             Invite your friends to vote here: localhost:8080/polls/voter/${poll_url}`
+
+    };
+    mailgun
+      .messages()
+      .send(data, function (error, body) {
+        console.log(body);
+      });
+  }
+
+  var userId = req.session.userid;
+  console.log('for createpoll post, userID is:', userId);
+  knex.select()
+  .from('users')
+  .innerJoin('questions', 'users.user_id', "questions.user_id")
+  .where({'users.user_id': userId})
+  .orderBy('question_id', 'desc')
+  .first('email', 'admin_url', 'poll_url')
+  .then((result) => {
+    sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
+  });
+});
 
 app.post("/email", (req, res) => {
   var data = {
     from: `${req.body.name} <${email}>`,
     to: req.body.mail,
-    subject: "It's a URL",
+    subject: "Congrats!Here are the links for your new poll!",
     text: req.body.comment
-  }
+  };
   mailgun.messages()
     .send(data, function (error, body) {
       console.log(body);
       res.redirect(303,"/");
-    })
-})
+    });
+});
+
 
 app.route("/polls/voter/:id")
   .get((req, res) => {
@@ -109,8 +138,7 @@ app.route("/polls/voter/:id")
       .then((result) => {
         console.log(result)
         res.render("takepoll", {
-          result: result,
-          username: req.session.username
+          result: result
         });
       })
       .catch((error) => {
@@ -158,7 +186,7 @@ app.get("/new", (req, res) => {
   }
 });
 
-app.post("/graph", (req, res) => {
+app.post("/test", (req, res) => {
   let result = [];
   let choices = [];
   let poll = [];
@@ -167,17 +195,17 @@ app.post("/graph", (req, res) => {
   let pollquestion = Object.keys(req.body);
   let pollurl = "";
   let questionid = "";
-
+  console.log(pollquestion);
   knex.select('poll_url', 'question_id').from('questions').where({
     question: pollquestion[0]
   }).then(function(resp) {
+
     pollurl = resp[0].poll_url;
     questionid = resp[0].question_id;
-
+    console.log(pollurl, questionid)
     getPoll(knex, pollurl).then(
       function(resp){
         poll = resp;
-
         knex.select().from('votes_by_array').where({
           question_id: questionid
         }).then(function(resp) {
@@ -192,15 +220,31 @@ app.post("/graph", (req, res) => {
                 }
               }
             });
-          }
 
+          }
           let vote = Object.keys(result).map(function (key) {
             return result[key];
           });
           res.send([vote, choices, poll.question, name])
+          // res.render("test", {
+          //   vote: vote,
+          //   choices: JSON.stringify(choices),
+          //   question: JSON.stringify(poll.question),
+          //   username: req.session.username
+          // });
         });
       }
-    );
+    )
+  })
+
+
+})
+
+app.post("/graph", (req, res) => {
+  knex.select().from('votes_by_array').where({
+    question_id: 1
+  }).then(function(resp) {
+    console.log(resp);
   });
 });
 
