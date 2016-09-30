@@ -137,7 +137,8 @@ app.route("/polls/voter/:id")
       .then((result) => {
         console.log(result)
         res.render("takepoll", {
-          result: result
+          result: result,
+          username: req.session.username
         });
       })
       .catch((error) => {
@@ -200,7 +201,7 @@ app.post("/graph", (req, res) => {
   }).then(function(resp) {
     pollurl = resp[0].poll_url;
     questionid = resp[0].question_id;
-  
+
     getPoll(knex, pollurl).then(
       function(resp){
         poll = resp;
