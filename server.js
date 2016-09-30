@@ -158,7 +158,7 @@ app.get("/new", (req, res) => {
   }
 });
 
-app.post("/test", (req, res) => {
+app.post("/graph", (req, res) => {
   let result = [];
   let choices = [];
   let poll = [];
@@ -201,14 +201,6 @@ app.post("/test", (req, res) => {
         });
       }
     );
-  });
-});
-
-app.post("/graph", (req, res) => {
-  knex.select().from('votes_by_array').where({
-    question_id: 1
-  }).then(function(resp) {
-    console.log(resp);
   });
 });
 

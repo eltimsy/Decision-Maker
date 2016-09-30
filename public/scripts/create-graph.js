@@ -6,7 +6,7 @@ $(document).ready(function() {
   $('#history').on('click','.panel-primary', function(ev) {
     let question = $(this)['0'].attributes['1'].value;
     $.ajax({
-      url: '/test',
+      url: '/graph',
       method: 'post',
       data: question
     }).done(function(data) {
