@@ -33,18 +33,59 @@ $(function() {
   });
 
 //add and delete rows for email list
+  var j=1;
   $("#add_row2").click(function(){
-    $('#email'+i).html("<td>"+ (i+1) +"</td><td><input name='option"+i+"' type='text' placeholder='Option' class='form-control input-md option'  /> </td>");
+    $('#email'+j).html("<td>"+ (j+1) +"</td><td><input name='option"+j+"' type='text' placeholder='email address' class='form-control input-md option'  /> </td>");
 
-    $('#tab_logic2').append('<tr id="email'+(i+1)+'"></tr>');
-    i++;
+    $('#tab_logic2').append('<tr class="email-tr" id="email'+(j+1)+'"></tr>');
+    j++;
   });
   $("#delete_row2").click(function(){
-    if(i>1){
-      $("#email"+(i-1)).html('');
-      i--;
+    if(j>1){
+      $("#email"+(j-1)).html('');
+      j--;
     }
   });
+
+  $('#newpoll-submit').on('click', function(ev) {
+    var rawData = $(':text');
+    var inputLength = $('#newpoll')['0'].length - 1;
+    var choicesArray = [];
+    var emailsArray = [];
+    var i = 0;
+    console.log(rawData)
+    for (var choice of rawData) {
+      console.log(choice)
+      if (i === 0) {
+        i += 1;
+      } else if (i < inputLength) {
+        choicesArray.push(choice.value);
+        i += 1;
+      } else {
+        emailsArray.push(choice.value);
+        i += 1;
+      }
+    }
+    var dataObject = {
+      question: rawData['0'].value,
+      choices: choicesArray,
+      emails: emailsArray
+    }
+    $.ajax({
+      type: 'POST',
+      url: '/createpoll',
+      data: dataObject,
+      error: function(error) {
+        console.log('AJAX POST error:', error);
+      },
+      success: function(response) {
+        window.location.replace('/main');
+      }
+    })
+  })
+
+
+
   /* todo: '/new' prevent blank input*/
   $('#login-form').on('click','#login-submit', function(ev) {
     ev.preventDefault();
