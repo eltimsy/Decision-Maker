@@ -20,7 +20,9 @@ $(function() {
   /* '/new': add & delete rows */
   var i=1;
   $("#add_row1").click(function(){
-    $('#opp'+i).html("<td>"+ (i+1) +"</td><td><input name='option"+i+"' type='text' placeholder='Option' class='form-control input-md option'  /> </td><td><input  name='descrip"+i+"' type='text' placeholder='Description'  class='form-control input-md description'></td>");
+    $('#opp'+i).html("<td>"+
+      (i+1) +
+      "</td><td><input name='option"+i+"' type='text' placeholder='Option' class='form-control input-md option'  /> </td><td><input  name='description_"+i+"' type='text' placeholder='Description'  class='form-control input-md description'></td>");
 
     $('#tab_logic1').append('<tr id="opp'+(i+1)+'"></tr>');
     i++;
@@ -35,7 +37,7 @@ $(function() {
 //add and delete rows for email list
   var j=1;
   $("#add_row2").click(function(){
-    $('#email'+j).html("<td>"+ (j+1) +"</td><td><input name='option"+j+"' type='text' placeholder='email address' class='form-control input-md option'  /> </td>");
+    $('#email'+j).html("<td>"+ (j+1) +"</td><td><input name='email"+j+"' type='text' placeholder='email address' class='form-control input-md email'  /> </td>");
 
     $('#tab_logic2').append('<tr class="email-tr" id="email'+(j+1)+'"></tr>');
     j++;
@@ -48,27 +50,27 @@ $(function() {
   });
 
   $('#newpoll-submit').on('click', function(ev) {
-    var rawData = $(':text');
-    var inputLength = $('#newpoll')['0'].length - 1;
     var choicesArray = [];
+    var descripArray = [];
     var emailsArray = [];
-    var i = 0;
-    console.log(rawData)
-    for (var choice of rawData) {
-      console.log(choice)
-      if (i === 0) {
-        i += 1;
-      } else if (i < inputLength) {
-        choicesArray.push(choice.value);
-        i += 1;
-      } else {
-        emailsArray.push(choice.value);
-        i += 1;
-      }
+    var quantity = $('#newpoll')['0'].length / 2 - 1;
+    var quantity2 = $('#email-list-form')['0'].length;
+
+    for (var i = 0; i < quantity; i++) {
+      choicesArray.push($(`#opp${i}`).find('.option').val());
+      descripArray.push($(`#opp${i}`).find('.description').val());
     }
+
+    for (var i = 0; i < quantity2; i++) {
+      emailsArray.push($(`#email${i}`).find('.email').val());
+    }
+
+    console.log(emailsArray, choicesArray, descripArray);
+
     var dataObject = {
-      question: rawData['0'].value,
+      question: $('#question').val(),
       choices: choicesArray,
+      description: descripArray,
       emails: emailsArray
     }
     $.ajax({
