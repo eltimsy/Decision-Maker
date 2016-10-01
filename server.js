@@ -100,7 +100,7 @@ app.get('/auth', (req, res) => {
 app.post("/createpoll", (req, res) => {
   const userId = req.session.userid;
   createPoll(knex, userId, req.body)
-    .then((response) => {
+    .then(response => {
       knex.select()
         .from('users')
         .innerJoin('questions', 'users.user_id', "questions.user_id")
@@ -108,7 +108,8 @@ app.post("/createpoll", (req, res) => {
         .orderBy('question_id', 'desc')
         .first('email', 'admin_url', 'poll_url')
         .then((result) => {
-          sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
+          console.log(result)
+          // sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
           res.redirect(303, "/main");
         });
       })
