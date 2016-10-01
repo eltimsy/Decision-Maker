@@ -7,7 +7,7 @@ const borda       = require('../server/lib/borda-count.js');
 module.exports = (knex) => {
   //1becruzvqd95
 
-  app.get("/:id", (req, res) =>{
+  app.get("/result/:id", (req, res) =>{
     let result = [];
     let choices = [];
     let poll = [];
