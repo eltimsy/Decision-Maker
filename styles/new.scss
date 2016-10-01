@@ -1,5 +1,5 @@
 body {
-  background-color: white;
+  background-color: #eceef7;
 
 
   main#container {
@@ -11,27 +11,33 @@ body {
       div.new-poll {
         float: right;
         width: 70%;
+        table.table {
+          background-color: #7dadab;
 
-        #newpoll-submit {
-          width: 15%;
-          margin-left: 38%;
+          #newpoll-submit {
+            width: 15%;
+            margin-left: 38%;
 
-          background: white;
-          border: 0.1em solid grey;
-          margin-left: 38%;
+            background: white;
+            border: 0.1em solid grey;
+            margin-left: 38%;
+          }
         }
       }
 
       div.email-list {
         float: left;
-        margin-left: -10%;
+        margin-left: -10px;
         width: 33%;
 
+        table.table {
+          background-color:#7dadab;
 
-        #email-list-submit {
-          background: white;
-          border: 0.1em solid grey;
-          margin-left: 20%;
+          #email-list-submit {
+            background: white;
+            border: 0.1em solid grey;
+            margin-left: 20%;
+          }
         }
       }
 

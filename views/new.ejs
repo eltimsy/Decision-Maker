@@ -21,10 +21,10 @@
     </header>
 
 <main id="container">
-      <div class="container">
+    <div class="container">
     <div class="row clearfix new-poll">
 		<div class="col-md-12 column">
-      <form id="newpoll" action="/createpoll" method="post" role="form">
+      <form id="newpoll" role="form">
   			<table class="table table-bordered table-hover" id="tab_logic1">
   				<thead>
   					<tr >
@@ -48,14 +48,14 @@
                       <tr id='opp1'></tr>
   				</tbody>
   			</table>
-        <a id="add_row1" class="btn btn-default pull-left">+</a><input type="submit" name="newpoll-submit" id="newpoll-submit" class="btn btn-register" value="Summit"><a id='delete_row1' class="pull-right btn btn-default">-</a>
+        <a id="add_row1" class="btn btn-default pull-left">+</a><input type="submit" name="newpoll-submit" id="newpoll-submit" class="btn btn-register" value="Submit"><a id='delete_row1' class="pull-right btn btn-default">-</a>
       </form>
 		</div>
 	</div>
 
   <div class="row clearfix email-list">
   <div class="col-md-12 column">
-    <form id="email-list-form" action="/emaillist" method="post" role="form">
+    <form id="email-list-form" role="form">
       <table class="table table-bordered table-hover" id="tab_logic2">
         <thead>
           <tr >
@@ -73,13 +73,13 @@
             1
             </td>
             <td>
-            <input type="text" name='email0'  placeholder='email address' class="form-control option"/>
+            <input type="text" name='email0'  placeholder='email address' class="form-control input-md option"/>
             </td>
           </tr>
                     <tr id='email1'></tr>
         </tbody>
       </table>
-      <a id="add_row2" class="btn btn-default pull-left">+</a><input type="submit" name="newpoll-submit" id="email-list-submit" class="btn btn-register" value="Done"><a id='delete_row2' class="pull-right btn btn-default">-</a>
+      <a id="add_row2" class="btn btn-default pull-left">+</a><a id='delete_row2' class="pull-right btn btn-default">-</a>
     </form>
   </div>
 </div>

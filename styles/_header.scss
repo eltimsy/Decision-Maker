@@ -4,7 +4,7 @@ nav {
   position: fixed;
   height: 100px;
   width: 100%;
-  background: #e6f0ff;
+  background: #248459;
   color: #e8fdff;
   padding-left: 2em;
   padding-top: 0em;
@@ -22,12 +22,13 @@ nav {
       margin-top: 16px;
       font-size: 200%;
       img.logo {
-        width: 100px;
+        width: 120px;
+        margin-top: 50px;
       }
       div {
         position: relative;
-        bottom: 65px;
-        left: 85px;
+        bottom: 90px;
+        left: 110px;
       }
     }
 

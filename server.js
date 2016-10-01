@@ -21,9 +21,11 @@ const knexLogger  = require('knex-logger');
 const createPoll  = require('./server/lib/create-poll');
 const getPoll     = require('./server/lib/get-poll');
 const regVote     = require('./server/lib/register-votes');
+const checkVoter  = require('./server/lib/check-voter');
 
 // Seperated Routes for each Resource
 const login       = require('./routes/login');
+const graph       = require('./routes/graph');
 const borda       = require('./server/lib/borda-count.js');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -62,16 +64,19 @@ app.use(express.static("public"));
 // app.use("/api/users", usersRoutes(knex));
 
 // Home page
+app.use('/home', login(knex));
+app.use('/', graph(knex));
+
 app.get("/", (req, res) => {
   console.log(req.session.username)
   if(req.session.auth === true){
     res.redirect('/main');
   } else {
-    res.render("index");
+    res.render("index", {
+      username: 'Guest'
+    });
   }
 });
-
-app.use('/home', login(knex));
 
 app.get('/auth', (req, res) => {
   if(req.session.auth === true) {
@@ -81,37 +86,32 @@ app.get('/auth', (req, res) => {
   }
 });
 
+/* Input to createpoll:
+  { question: 'afsdafdsafdsafsd',
+  choices: [ 'fasdafsdfasdfasd', 'afsdfsaafsdsadf' ],
+  emails:
+   [ 'fadafsdfd',
+     'fadsafsdfads',
+     'afsdsfdasfd',
+     'afsasdfafsd',
+     'afdsasdfafsd' ] }
+ */
 
 app.post("/createpoll", (req, res) => {
-  createPoll(knex, req.session.userid, req.body);
-  setTimeout(function(){res.redirect(303, "/main");},1000);
-
-  function sendCongratsEmail(email, admin_url, poll_url){
-    var data = {
-      from: 'RocketVoters <rocketvoters@rendition.club>',
-      to: email,
-      subject: "Congrats!Here are the links for your new poll!",
-      text: `See your poll here: ${admin_url} \n
-             Invite your friends to vote here: localhost:8080/polls/voter/${poll_url}`
-    };
-    mailgun
-      .messages()
-      .send(data, function (error, body) {
-        console.log(body);
-      });
-  }
-
-  var userId = req.session.userid;
-  console.log('for createpoll post, userID is:', userId);
-  knex.select()
-    .from('users')
-    .innerJoin('questions', 'users.user_id', "questions.user_id")
-    .where({'users.user_id': userId})
-    .orderBy('question_id', 'desc')
-    .first('email', 'admin_url', 'poll_url')
-    .then((result) => {
-      sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
-    });
+  const userId = req.session.userid;
+  createPoll(knex, userId, req.body)
+    .then((response) => {
+      knex.select()
+        .from('users')
+        .innerJoin('questions', 'users.user_id', "questions.user_id")
+        .where({'users.user_id': userId})
+        .orderBy('question_id', 'desc')
+        .first('email', 'admin_url', 'poll_url')
+        .then((result) => {
+          sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
+          res.redirect(303, "/main");
+        });
+      })
   });
 
 app.post("/email", (req, res) => {
@@ -127,6 +127,11 @@ app.post("/email", (req, res) => {
       res.redirect(303,"/");
     })
 })
+
+/* Explanation of the (slight) callback hell below. The ajax call from the
+poll heads to this route, which first will check the email address for
+validity (function checkVoter), and then will submit the vote (function
+regVote). */
 
 app.route("/polls/voter/:id")
   .get((req, res) => {
@@ -144,27 +149,38 @@ app.route("/polls/voter/:id")
       });
   })
   .post((req, res) => {
-    regVote(knex, req.body)
+    checkVoter(knex, req.body)
       .then((result) => {
-        res.redirect(303, "/main");
+        if (result) {
+          res.send(result);
+        } else {
+          regVote(knex, req.body)
+            .then((result) => {
+              res.send(false);
+            })
+            .catch((error) => {
+              console.log(error);
+              res.redirect(500, "/main");
+            })
+        }
       })
       .catch((error) => {
         console.log(error);
-        res.redirect(500, "/main")
+        res.redirect(500, "/main");
       })
   })
 
 app.get("/main", (req, res) => {
   if(req.session.auth === true) {
-    knex.select('question', 'question_id')
+    knex.select('question', 'question_id', 'admin_url')
       .from('questions')
       .where('user_id', req.session.userid)
       .orderBy('question_id', 'desc')
       .then(function(result) {
         const liveQuestions = result.map((value) => {
-          return value.question;
+          return [value.question,value.admin_url];
         });
-        knex.select()
+        console.log(liveQuestions);
         res.render("main", {
           questions: liveQuestions,
           username: req.session.username
@@ -186,52 +202,22 @@ app.get("/new", (req, res) => {
   }
 });
 
-app.post("/graph", (req, res) => {
-  let result = [];
-  let choices = [];
-  let poll = [];
-  let max = 0;
-  let name = "";
-  let pollquestion = Object.keys(req.body);
-  let pollurl = "";
-  let questionid = "";
-
-  knex.select('poll_url', 'question_id').from('questions').where({
-    question: pollquestion[0]
-  }).then(function(resp) {
-    pollurl = resp[0].poll_url;
-    questionid = resp[0].question_id;
-
-    getPoll(knex, pollurl).then(
-      function(resp){
-        poll = resp;
-
-        knex.select().from('votes_by_array').where({
-          question_id: questionid
-        }).then(function(resp) {
-          result = borda.bordaCount(questionid, resp);
-          for(let key in result) {
-            poll.choices.forEach(function(index){
-              if(key === index.choice_id){
-                choices.push(index.choice_name);
-                if(max < result[key]){
-                  max = result[key];
-                  name = index.choice_name;
-                }
-              }
-            });
-          }
-
-          let vote = Object.keys(result).map(function (key) {
-            return result[key];
-          });
-          res.send([vote, choices, poll.question, name])
-        });
-      }
-    );
-  });
-});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
+function sendCongratsEmail(email, admin_url, poll_url){
+  var data = {
+    from: 'RocketVoters <rocketvoters@rendition.club>',
+    to: email,
+    subject: "Here are the links for your new poll:",
+    text: `See your poll here: ${admin_url} \n
+           Invite your friends to vote here: localhost:8080/polls/voter/${poll_url}`
+  };
+  mailgun
+    .messages()
+    .send(data, function (error, body) {
+      console.log(body);
+    });
+}

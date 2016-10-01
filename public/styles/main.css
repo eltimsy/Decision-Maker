@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  background-color: white;
+  background-color: #eceef7;
   color: black;
 }
 
@@ -29,13 +29,23 @@ body main#poll-container h1 {
 }
 
 body main#poll-container ul#poll-block-list li {
+  background-color: #ed8e9a;
+  border-radius: 10px;
   margin: 10px 10px 10px 10px;
   padding: 20px 20px 20px 20px;
   font-weight: 300;
   font-size: 24px;
 }
 
+body main#poll-container div#poll-vote-confirm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 body main#poll-container button#poll-vote-submit {
+  margin: 10px 10px 10px 10px;
   background-color: white;
   font-weight: bolder;
 }
@@ -49,6 +59,15 @@ body main#container div#history {
   margin-left: 10%;
   margin-right: 10px;
   width: 250px;
+}
+
+body main#container div#history div.panel {
+  border-color: #1b351b;
+}
+
+body main#container div#history div.panel div.panel-heading {
+  background: #1b351b;
+  border-color: #1b351b;
 }
 
 #myDiv {

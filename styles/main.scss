@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  background-color: white;
+  background-color: #eceef7;
   color: black;
 
   main#poll-container {
@@ -26,13 +26,22 @@ body {
     }
     ul#poll-block-list {
       li {
+        background-color: #ed8e9a;
+        border-radius: 10px;
         margin: 10px 10px 10px 10px;
         padding: 20px 20px 20px 20px;
         font-weight: 300;
         font-size: 24px;
       }
     }
+    div#poll-vote-confirm {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
     button#poll-vote-submit {
+      margin: 10px 10px 10px 10px;
       background-color: white;
       font-weight: bolder;
     }
@@ -45,22 +54,19 @@ body {
       margin-left: 10%;
       margin-right: 10px;
       width: 250px;
-
-      article.past-polls {
-
-
-        h2 {
-
-        }
-
-        button {
-
+      div.panel{
+        border-color: #1b351b;
+        div.panel-heading {
+          background:#1b351b;
+          border-color: #1b351b;
         }
       }
     }
 
   }
 }
+
+
 
 #myDiv {
   float: left;
