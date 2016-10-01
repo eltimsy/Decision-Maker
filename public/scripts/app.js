@@ -20,7 +20,7 @@ $(function() {
   /* '/new': add & delete rows */
   var i=1;
   $("#add_row1").click(function(){
-    $('#opp'+i).html("<td>"+ (i+1) +"</td><td><input name='option"+i+"' type='text' placeholder='Option' class='form-control input-md option'  /> </td>");
+    $('#opp'+i).html("<td>"+ (i+1) +"</td><td><input name='option"+i+"' type='text' placeholder='Option' class='form-control input-md option'  /> </td><td><input  name='descrip"+i+"' type='text' placeholder='Description'  class='form-control input-md description'></td>");
 
     $('#tab_logic1').append('<tr id="opp'+(i+1)+'"></tr>');
     i++;
