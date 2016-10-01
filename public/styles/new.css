@@ -1,5 +1,5 @@
 body {
-  background-color: white;
+  background-color: #eceef7;
 }
 
 body main#container {
@@ -15,7 +15,11 @@ body main#container div.container div.new-poll {
   width: 70%;
 }
 
-body main#container div.container div.new-poll #newpoll-submit {
+body main#container div.container div.new-poll table.table {
+  background-color: #7dadab;
+}
+
+body main#container div.container div.new-poll table.table #newpoll-submit {
   width: 15%;
   margin-left: 38%;
   background: white;
@@ -25,11 +29,15 @@ body main#container div.container div.new-poll #newpoll-submit {
 
 body main#container div.container div.email-list {
   float: left;
-  margin-left: -10%;
+  margin-left: -10px;
   width: 33%;
 }
 
-body main#container div.container div.email-list #email-list-submit {
+body main#container div.container div.email-list table.table {
+  background-color: #7dadab;
+}
+
+body main#container div.container div.email-list table.table #email-list-submit {
   background: white;
   border: 0.1em solid grey;
   margin-left: 20%;

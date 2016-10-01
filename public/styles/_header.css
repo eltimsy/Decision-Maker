@@ -23,13 +23,14 @@ nav div.header {
 }
 
 nav div.header img.logo {
-  width: 100px;
+  width: 120px;
+  margin-top: 50px;
 }
 
 nav div.header div {
   position: relative;
-  bottom: 65px;
-  left: 85px;
+  bottom: 90px;
+  left: 110px;
 }
 
 nav form.logout-form {
