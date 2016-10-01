@@ -157,7 +157,7 @@ app.route("/polls/voter/:id")
         } else {
           regVote(knex, req.body)
             .then((result) => {
-              res.send(false);
+              res.send('success');
             })
             .catch((error) => {
               console.log(error);

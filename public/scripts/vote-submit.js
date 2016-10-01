@@ -1,10 +1,13 @@
 $('document').ready(function() {
 
   $('#poll-vote-submit').on('click', function(event) {
+    event.preventDefault();
     var prefList = $('#poll-block-list').children('li');
     var email = $('#email-confirm').val();
     var url = window.location.href;
     var voteData = cleanPref(prefList, email);
+    $('.error2').text('');
+    $('.error2').fadeIn();
     $.ajax({
       type: "POST",
       url: url,
@@ -13,7 +16,9 @@ $('document').ready(function() {
         console.log('AJAX POST error:', error);
       },
       success: function(response) {
-        if (response) {
+        if (response !== 'success') {
+          $('.error2').text("Invalid email address");
+          $('.error2').fadeOut(1500);
           console.log('Ajax POST successful.');
           console.log('Vote failed.');
         } else {
