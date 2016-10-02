@@ -36,10 +36,10 @@ module.exports = function createPollQuestion(db, user, pollInput) {
             })
             .catch((error) => {reject(error);});
         }
-        for (let choice of pollInput.choices) {
+        for (var i = 0; i < pollInput.choices.length; i++) {
           let cRow = {
-            choice_name: choice,
-            description: '',
+            choice_name: pollInput.choices[i],
+            description: pollInput.description[i],
             question_id: newId[0]
           }
           db('choices')
