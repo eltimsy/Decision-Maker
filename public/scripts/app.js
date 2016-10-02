@@ -48,6 +48,7 @@ $(function() {
   });
 
   $('#newpoll-submit').on('click', function(ev) {
+    ev.preventDefault();
     var rawData = $(':text');
     var inputLength = $('#newpoll')['0'].length - 1;
     var choicesArray = [];
