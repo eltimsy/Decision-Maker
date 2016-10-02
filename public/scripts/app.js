@@ -50,6 +50,7 @@ $(function() {
   });
 
   $('#newpoll-submit').on('click', function(ev) {
+    ev.preventDefault();
     var choicesArray = [];
     var descripArray = [];
     var emailsArray = [];
@@ -64,14 +65,13 @@ $(function() {
     for (var i = 0; i < quantity2; i++) {
       emailsArray.push($(`#email${i}`).find('.email').val());
     }
-    
     var dataObject = {
       question: $('#question').val(),
       choices: choicesArray,
       description: descripArray,
       emails: emailsArray
     }
-    console.log(dataObject);
+
     $.ajax({
       type: 'POST',
       url: '/createpoll',
@@ -80,10 +80,10 @@ $(function() {
         console.log('AJAX POST error:', error);
       },
       success: function(response) {
-        window.location.replace('/main');
+        window.location='/main';
       }
-    })
-  })
+    });
+  });
 
 
 

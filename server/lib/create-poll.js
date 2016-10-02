@@ -9,7 +9,7 @@ const generateRandomString = require('./random-string');
 // wait until the form also passes description data).
 
 module.exports = function createPollQuestion(db, user, pollInput) {
-  return new Promise((resolve, reject) => {
+  const questionProm = new Promise((resolve, reject) => {
     let pollEmails = {};
     const question = pollInput.question;
     delete pollInput.question;
@@ -36,19 +36,21 @@ module.exports = function createPollQuestion(db, user, pollInput) {
             })
             .catch((error) => {reject(error);});
         }
-        for (var i = 0; i < pollInput.choices.length; i++) {
-          let cRow = {
-            choice_name: pollInput.choices[i],
-            description: pollInput.description[i],
-            question_id: newId[0]
-          }
-          db('choices')
-            .insert(cRow)
-            .then((results) => {
-              resolve(results);
-            })
-            .catch((error) => {reject(error);});
-        }
-      })
+      });
+    });
+
+  const choiceProm = new Promise((resolve, reject) => {
+    for (var i = 0; i < pollInput.choices.length; i++) {
+      let cRow = {
+        choice_name: pollInput.choices[i],
+        description: pollInput.description[i],
+        question_id: newId[0]
+      }
+      db('choices')
+        .insert(cRow)
+        .catch((error) => {console.log(error);});
+    }
   });
+
+  return Promise.all([questionProm, choiceProm]);
 }
