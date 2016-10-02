@@ -22,7 +22,7 @@
   </body>
     <br><br><br><br><br><br><br>
     <div class="winner">The winner is: <em class="winnername"><%= winner %></em></div>
-    <div id="myDiv" style="width: 480px; height: 400px;"></div>
+    <div id="myDiv"></div>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
     var data = [{
@@ -35,16 +35,16 @@
     }];
 
     var layout = {
-      title: <%- question %>,
+      title: <%- question.toUpperCase() %>,
       height: 600,
       width: 600,
       font: {
         family: 'Courier New, monospace',
-        size: 20,
+        size: 15,
         color: 'teal'
       },
       margin: {
-        l: 50,
+        l: 100,
         r: 150,
         b: 300,
         t: 100,

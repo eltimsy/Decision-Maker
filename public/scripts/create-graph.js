@@ -30,16 +30,16 @@ $(document).ready(function() {
       }];
 
       var layout = {
-        title: title,
+        title: title.toUpperCase(),
         height: 500,
         width: 600,
         font: {
           family: 'Courier New, monospace',
-          size: 20,
+          size: 15,
           color: 'teal'
         },
         margin: {
-          l: 50,
+          l: 100,
           r: 150,
           b: 200,
           t: 100,
