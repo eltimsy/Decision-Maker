@@ -5,17 +5,14 @@ const app  = express.Router();
 
 module.exports = (knex) => {
   app.post('/login', (req, res) => {
-    console.log(req.body)
     let user = req.body.username;
     let password = req.body.password;
     knex.select('username','password','user_id').from('users').where({
       username: user
     }).then(function(resp) {
-      console.log(resp);
       if(resp.length < 1) {
         res.send('fail');
       } else {
-        console.log(resp[0].password)
         bcrypt.compare(password, resp[0].password, function(err, response) {
           if(response == true) {
             req.session.auth = true;
@@ -38,7 +35,6 @@ module.exports = (knex) => {
 //
 app.post('/register', (req, res) => {
   let password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null);
-  console.log(password.length);
   let entry = {
     username: req.body.username,
     email: req.body.email,
@@ -49,7 +45,6 @@ app.post('/register', (req, res) => {
       knex('users').insert(entry)
       .returning('user_id')
       .then((resp) => {
-        console.log(req.body.username);
         req.session.auth = true;
         req.session.username = req.body.username;
         req.session.userid = Number(resp);
@@ -62,7 +57,6 @@ app.post('/register', (req, res) => {
     .select()
     .then((result) => {
       if (result.length > 0) {
-        //todo: create a flash message;
         console.log("This name is already taken!");
         res.send('fail');
       } else {
@@ -74,6 +68,5 @@ app.post('/register', (req, res) => {
   registerNewUser(entry);
 });
 
-//
   return app;
 };

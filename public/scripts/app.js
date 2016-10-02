@@ -1,6 +1,5 @@
 'use strict';
 
-/* Login page panel switch*/
 $(function() {
     $('#login-form-link').click(function(e) {
 		$("#login-form").delay(100).fadeIn(100);
@@ -17,7 +16,6 @@ $(function() {
 		e.preventDefault();
 	});
 
-  /* '/new': add & delete rows */
   var i=1;
   $("#add_row1").click(function(){
     $('#opp'+i).html("<td>"+
@@ -34,7 +32,6 @@ $(function() {
     }
   });
 
-//add and delete rows for email list
   var j=1;
   $("#add_row2").click(function(){
     $('#email'+j).html("<td>"+ (j+1) +"</td><td><input name='email"+j+"' type='text' placeholder='email address' class='form-control input-md email'  /> </td>");
@@ -64,14 +61,14 @@ $(function() {
     for (var i = 0; i < quantity2; i++) {
       emailsArray.push($(`#email${i}`).find('.email').val());
     }
-    
+
     var dataObject = {
       question: $('#question').val(),
       choices: choicesArray,
       description: descripArray,
       emails: emailsArray
     }
-    console.log(dataObject);
+
     $.ajax({
       type: 'POST',
       url: '/createpoll',
@@ -86,8 +83,6 @@ $(function() {
   })
 
 
-
-  /* todo: '/new' prevent blank input*/
   $('#login-form').on('click','#login-submit', function(ev) {
     ev.preventDefault();
     let username = document.getElementById('username').value;
@@ -125,7 +120,7 @@ $(function() {
       password: password,
       email: email
     }
-    console.log(login);
+  
     $('.error').text('');
     $('.error').fadeIn();
     if(!username || !password || !email){

@@ -10,7 +10,6 @@ const express     = require("express");
 module.exports = function registerNewUser(entry){
   const insertNewUsername = (entry) => {
     knex('users').insert(entry)
-    // .returning(user_id)
     .then(() => {
         res.redirect(303, '/main');
     });
@@ -21,8 +20,6 @@ module.exports = function registerNewUser(entry){
   .select()
   .then((result) => {
     if (result.length > 0) {
-      //todo: create a flash message;
-      console.log("This name is already taken!");
       res.redirect(303, '/')
     } else {
       insertNewUsername(entry);

@@ -5,7 +5,6 @@ const getPoll     = require('../server/lib/get-poll');
 const borda       = require('../server/lib/borda-count.js');
 
 module.exports = (knex) => {
-  //1becruzvqd95
 
   app.get("/result/:id", (req, res) =>{
     let result = [];
@@ -18,7 +17,6 @@ module.exports = (knex) => {
     let questionid = "";
 
     const path_id = req.params.id;
-    console.log(path_id)
     knex.select('poll_url', 'question_id').from('questions').where({
       admin_url: path_id
     }).then(function(resp) {
@@ -48,15 +46,13 @@ module.exports = (knex) => {
             let vote = Object.keys(result).map(function (key) {
               return result[key];
             });
-            console.log(vote, choices)
             res.render('admingraph', {
               choices: JSON.stringify(choices),
               vote: vote,
               question: JSON.stringify(poll.question),
               winner: name,
-              username: 'Guest'
+              username: req.session.username || 'Guest'
             });
-            //res.end([vote, choices, poll.question, name])
           });
         }
       );

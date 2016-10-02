@@ -28,12 +28,8 @@ const login       = require('./routes/login');
 const graph       = require('./routes/graph');
 const borda       = require('./server/lib/borda-count.js');
 
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
 
-// Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 
 app.use(session({
@@ -60,15 +56,11 @@ app.use("/styles", sass({
 
 app.use(express.static("public"));
 
-// Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
-
 // Home page
 app.use('/home', login(knex));
 app.use('/', graph(knex));
 
 app.get("/", (req, res) => {
-  console.log(req.session.username)
   if(req.session.auth === true){
     res.redirect('/main');
   } else {
@@ -108,7 +100,6 @@ app.post("/createpoll", (req, res) => {
         .orderBy('question_id', 'desc')
         .first('email', 'admin_url', 'poll_url')
         .then((result) => {
-          console.log(result)
           // sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
           res.redirect(303, "/main");
         });
@@ -139,7 +130,6 @@ app.route("/polls/voter/:id")
     const path_id = req.params.id;
     getPoll(knex, path_id)
       .then((result) => {
-        console.log(result)
         res.render("takepoll", {
           result: result,
           username: req.session.username || 'Guest'
@@ -181,7 +171,6 @@ app.get("/main", (req, res) => {
         const liveQuestions = result.map((value) => {
           return [value.question,value.admin_url];
         });
-        console.log(liveQuestions);
         res.render("main", {
           questions: liveQuestions,
           username: req.session.username

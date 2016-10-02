@@ -43,10 +43,6 @@ CREATE TABLE votes_by_vote (
   choice_id bigint REFERENCES choices (choice_id) ON DELETE CASCADE
 );
 
--- if there are future issues, try using json instead of jsonb
--- for now, however, jsonb is generally more performant
--- except for the initial write
-
 CREATE TABLE session (
   session_id text PRIMARY KEY NOT DEFERRABLE INITIALLY IMMEDIATE COLLATE "default",
   expire timestamp(6) NOT NULL,
