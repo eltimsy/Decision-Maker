@@ -50,6 +50,7 @@ $(function() {
   });
 
   $('#newpoll-submit').on('click', function(ev) {
+    ev.preventDefault();
     var choicesArray = [];
     var descripArray = [];
     var emailsArray = [];
@@ -81,10 +82,10 @@ $(function() {
         console.log('AJAX POST error:', error);
       },
       success: function(response) {
-        window.location.replace('/main');
+        window.location='/main';
       }
-    })
-  })
+    });
+  });
 
 
 
