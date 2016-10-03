@@ -1,4 +1,4 @@
-nav {
+nav.nav-bar {
   position: fixed;
   height: 100px;
   width: 100%;
@@ -17,38 +17,32 @@ nav {
   font-family: 'PT Sans', sans-serif;
 }
 
-nav div.header {
+nav.nav-bar .header {
   margin-top: 16px;
   font-size: 200%;
   color: black;
 }
 
-nav div.header img.logo {
+nav.nav-bar .header img.logo {
   width: 120px;
   margin-top: 50px;
 }
 
-nav div.header div {
+nav.nav-bar .header div {
   position: relative;
   bottom: 90px;
   left: 110px;
 }
 
-nav span.header {
-  margin-top: 16px;
-  font-size: 200%;
-  color: black;
-}
-
-nav form.logout-form {
+nav.nav-bar form.logout-form {
   display: flex;
   flex-direction: column;
 }
 
-nav form.logout-form div {
+nav.nav-bar form.logout-form div {
   margin-bottom: 6px;
 }
 
-nav div.login-anchor {
+nav.nav-bar div.login-anchor {
   display: flex;
 }

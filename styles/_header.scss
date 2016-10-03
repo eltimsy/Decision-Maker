@@ -1,6 +1,6 @@
 // @import "bootstrap";
 
-nav {
+nav.nav-bar{
   position: fixed;
   height: 100px;
   width: 100%;
@@ -18,7 +18,7 @@ nav {
   color: black;
   font-family: 'PT Sans', sans-serif;
 
-    div.header {
+    .header {
       margin-top: 16px;
       font-size: 200%;
       color: black;
@@ -31,11 +31,6 @@ nav {
         bottom: 90px;
         left: 110px;
       }
-    }
-    span.header {
-      margin-top: 16px;
-      font-size: 200%;
-      color: black;
     }
 
     form.logout-form {

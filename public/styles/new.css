@@ -7,7 +7,7 @@ body main#container {
 }
 
 body main#container div.container {
-  margin-top: 20%;
+  margin-top: 160px;
 }
 
 body main#container div.container div.new-poll {
@@ -16,15 +16,13 @@ body main#container div.container div.new-poll {
 }
 
 body main#container div.container div.new-poll table.table {
-  background-color: #7dadab;
+  background-color: #6A8D92;
 }
 
-body main#container div.container div.new-poll table.table #newpoll-submit {
+body main#container div.container div.new-poll input#newpoll-submit {
   width: 15%;
-  margin-left: 38%;
   background: white;
   border: 0.1em solid grey;
-  margin-left: 38%;
 }
 
 body main#container div.container div.email-list {
@@ -34,11 +32,15 @@ body main#container div.container div.email-list {
 }
 
 body main#container div.container div.email-list table.table {
-  background-color: #7dadab;
+  background-color: #6A8D92;
 }
 
 body main#container div.container div.email-list table.table #email-list-submit {
   background: white;
   border: 0.1em solid grey;
   margin-left: 20%;
+}
+
+table.table th {
+  height: 52px;
 }
