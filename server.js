@@ -27,8 +27,8 @@ const checkVoter  = require('./server/lib/check-voter');
 const login       = require('./routes/login');
 const graph       = require('./routes/graph');
 const borda       = require('./server/lib/borda-count.js');
-// const sendCongratsEmail = require('.server/lib/email').sendCongratsEmail;
-// const inviteFriendsEmail = require('./server/lib/email').inviteFriendsEmail;
+const sendCongratsEmail = require('./server/lib/email').sendCongratsEmail;
+const inviteFriendsEmail = require('./server/lib/email').inviteFriendsEmail;
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -110,8 +110,8 @@ app.post("/createpoll", (req, res) => {
         .orderBy('question_id', 'desc')
         .first('email', 'admin_url', 'poll_url', 'username', 'question_id')
         .then((result) => {
-          // sendCongratsEmail(mailgun, result['email'], result['admin_url'], result['poll_url']);
-          // inviteFriendsEmail(mailgun, knex, result['username'], result['question_id']);
+          sendCongratsEmail(mailgun, result['email'], result['admin_url'], result['poll_url']);
+          inviteFriendsEmail(mailgun, knex, result['username'], result['question_id'], result['poll_url']);
           res.redirect(303, "/main");
         })
         .catch((error) => {
