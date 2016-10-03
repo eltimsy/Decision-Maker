@@ -10,6 +10,21 @@ body main#container div.container {
   margin-top: 20%;
 }
 
+body main#container div.container div#empty-q-warning {
+  color: red;
+  margin-left: 41%;
+}
+
+body main#container div.container div#fewer-o-warning {
+  color: red;
+  margin-left: 41%;
+}
+
+body main#container div.container div#empty-o-warning {
+  color: red;
+  margin-left: 41%;
+}
+
 body main#container div.container div.new-poll {
   float: right;
   width: 70%;
@@ -29,7 +44,7 @@ body main#container div.container div.new-poll table.table #newpoll-submit {
 
 body main#container div.container div.email-list {
   float: left;
-  margin-left: -10px;
+  margin-left: -27%;
   width: 33%;
 }
 
