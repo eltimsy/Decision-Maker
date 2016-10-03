@@ -27,10 +27,13 @@
     <div class="container">
     <div class="row clearfix new-poll">
 		<div class="col-md-12 column">
+
+    <input type="text" name='question' id="question" placeholder='describe your poll question' class="form-control"/>
+
       <form id="newpoll" role="form">
         <thead>
           <tr>
-            <input type="text" name='question' id="question" placeholder='describe your poll question' class="form-control"/>
+
           </tr>
         </thead>
   			<table class="table table-bordered table-hover" id="tab_logic1">
@@ -43,7 +46,7 @@
                 Option
               </th>
   						<th class="text-center">
-  							Description
+  							Description (optional)
   						</th>
   					</tr>
   				</thead>
@@ -69,18 +72,9 @@
 
   <div class="row clearfix email-list">
   <div class="col-md-12 column">
-    <form id="email-list-form" role="form">
+    <input type="submit" name="invite" id="invite" class="btn btn-register" value="Invite friends">
+    <form id="email-list-form" role="form" hidden>
       <table class="table table-bordered table-hover" id="tab_logic2">
-        <thead>
-          <tr >
-            <th class="text-center">
-              #
-            </th>
-            <th class="text-center">
-              Grant access to the poll:
-            </th>
-          </tr>
-        </thead>
         <tbody>
           <tr id='email0'>
             <td>

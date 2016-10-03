@@ -91,4 +91,9 @@ $(function() {
       });
     }
   });
+
+  $("#invite").on('click', () => {
+    $('#email-list-form').slideToggle('normal');
+    $('input.email').focus();
+  });
 });
