@@ -26,6 +26,7 @@
     <main id="poll-container">
       <section id="polloptions">
         <h1 class="question"><%= result.question %></h1>
+        <h6>(Rank most preferred down to least preferred.)</h6>
         <ul id="poll-block-list" class="list-unstyled" data-question-id="<%=result.question_id%>">
           <% result.choices.forEach((row) => { %>
             <li data-choice-id="<%= row.choice_id %>"><%= row.choice_name %><br><small><%= row.description %></small></li>
