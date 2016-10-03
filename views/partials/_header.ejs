@@ -6,7 +6,7 @@
   <div class="logIn">
     <% if (username !== 'Guest') { %>
     <form class="logout-form" action="/home/logout" method="post">
-      <div>Hello <%= username %></div>
+      <div id="username"><a href="/main">Welcome, <%= username %>!</a></div>
       <input class="logoutbutton" name="logout" type="submit" value="Logout">
     </form>
     <% } else { %>

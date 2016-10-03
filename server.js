@@ -161,7 +161,7 @@ app.get("/main", (req, res) => {
       .orderBy('question_id', 'desc')
       .then(function(result) {
         const liveQuestions = result.map((value) => {
-          return [value.question,value.admin_url, value.poll_url];
+          return [value.question,value.admin_url,value.poll_url];
         });
         res.render("main", {
           questions: liveQuestions,

@@ -10,6 +10,7 @@ body {
 
 body main#poll-container {
   cursor: unset;
+  border-radius: 10px;
   max-width: 500px;
   min-width: 400px;
   margin: auto;
@@ -22,16 +23,18 @@ body main#poll-container {
   align-items: center;
   flex-direction: column;
   text-align: center;
+  background-color: #eceef7;
 }
 
 body main#poll-container h1 {
-  border-bottom: 3px solid black;
+  font-weight: bold;
+  font-style: italic;
 }
 
 body main#poll-container ul#poll-block-list li {
-  background-color: #ed8e9a;
+  background-color: #A1E887;
   border-radius: 10px;
-  margin: 10px 10px 10px 10px;
+  margin: 15px 15px 15px 15px;
   padding: 20px 20px 20px 20px;
   font-weight: 300;
   font-size: 24px;
@@ -89,7 +92,7 @@ div.error2 {
 }
 
 #myDiv {
-  float: left;
+  z-index: -1;
   margin-left: 20px;
   position: fixed;
 }
