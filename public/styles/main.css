@@ -66,8 +66,20 @@ body main#container div#history div.panel {
 }
 
 body main#container div#history div.panel div.panel-heading {
-  background: #1b351b;
+  background: #6A8D92;
   border-color: #1b351b;
+}
+
+a {
+  color: #4B4E6D;
+}
+
+a:visited {
+  color: #34364b;
+}
+
+a:hover {
+  color: #878aab;
 }
 
 div.error2 {

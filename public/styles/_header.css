@@ -2,7 +2,7 @@ nav {
   position: fixed;
   height: 100px;
   width: 100%;
-  background: #248459;
+  background: #80B192;
   color: #e8fdff;
   padding-left: 2em;
   padding-top: 0em;
@@ -20,6 +20,7 @@ nav {
 nav div.header {
   margin-top: 16px;
   font-size: 200%;
+  color: black;
 }
 
 nav div.header img.logo {
@@ -33,6 +34,12 @@ nav div.header div {
   left: 110px;
 }
 
+nav span.header {
+  margin-top: 16px;
+  font-size: 200%;
+  color: black;
+}
+
 nav form.logout-form {
   display: flex;
   flex-direction: column;
@@ -40,4 +47,8 @@ nav form.logout-form {
 
 nav form.logout-form div {
   margin-bottom: 6px;
+}
+
+nav div.login-anchor {
+  display: flex;
 }

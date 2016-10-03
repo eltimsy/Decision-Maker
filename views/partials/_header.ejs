@@ -4,10 +4,15 @@
     <div><i>Prefer.Engine</i></div>
   </div>
   <div class="logIn">
-    <!--todo: define username -->
+    <% if (username !== 'Guest') { %>
     <form class="logout-form" action="/home/logout" method="post">
       <div>Hello <%= username %></div>
       <input class="logoutbutton" name="logout" type="submit" value="Logout">
     </form>
+    <% } else { %>
+      <form class="logout-form">
+      <div class="login-anchor"><a href="/">Log In?</a></div>
+      </form>
+    <% } %>
   </div>
 </nav>

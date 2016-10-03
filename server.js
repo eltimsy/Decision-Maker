@@ -100,7 +100,7 @@ app.post("/createpoll", (req, res) => {
         .orderBy('question_id', 'desc')
         .first('email', 'admin_url', 'poll_url')
         .then((result) => {
-          // sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
+          sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
           res.redirect(303, "/main");
         });
       })
