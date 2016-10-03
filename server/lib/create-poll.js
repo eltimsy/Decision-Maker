@@ -23,7 +23,7 @@ module.exports = function createPollQuestion(db, user, pollInput) {
       .insert(qRow)
       .returning('question_id')
       .then((newId) => {
-        for (let email in pollInput.emails) {
+        for (let email of pollInput.emails) {
           let eRow = {
             voter_email: email,
             voted: false,
@@ -31,15 +31,19 @@ module.exports = function createPollQuestion(db, user, pollInput) {
           }
           db('voter_emails')
             .insert(eRow)
-            .catch((error) => {console.log(error);});
+            .then((results) => {
+              resolve(results);
+            })
+            .catch((error) => {reject(error);});
         }
-      })
+      });
     });
+
   const choiceProm = new Promise((resolve, reject) => {
-    for (let choice in pollInput.choices) {
+    for (var i = 0; i < pollInput.choices.length; i++) {
       let cRow = {
-        choice_name: pollInput.choices[choice],
-        description: '',
+        choice_name: pollInput.choices[i],
+        description: pollInput.description[i],
         question_id: newId[0]
       }
       db('choices')
@@ -47,5 +51,6 @@ module.exports = function createPollQuestion(db, user, pollInput) {
         .catch((error) => {console.log(error);});
     }
   });
+
   return Promise.all([questionProm, choiceProm]);
 }

@@ -8,6 +8,21 @@ body {
     div.container {
       margin-top: 20%;
 
+      div#empty-q-warning {
+        color: red;
+        margin-left: 41%;
+      }
+
+      div#fewer-o-warning {
+        color: red;
+        margin-left: 41%;
+      }
+
+      div#empty-o-warning {
+        color: red;
+        margin-left: 41%;
+      }
+
       div.new-poll {
         float: right;
         width: 70%;
@@ -27,7 +42,7 @@ body {
 
       div.email-list {
         float: left;
-        margin-left: -10px;
+        margin-left: -27%;
         width: 33%;
 
         table.table {

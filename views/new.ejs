@@ -10,7 +10,7 @@
 
     <!--external vendor -->
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/new.js"></script>
 
   </head>
 
@@ -24,6 +24,10 @@
     <div class="container">
     <div class="row clearfix new-poll">
 		<div class="col-md-12 column">
+
+    <div id="empty-q-warning" hidden>Question can not be empty!</div>
+    <div id="empty-o-warning" hidden>There must be at least 2 options!</div>
+    <div id="fewer-o-warning" hidden>Options can not be empty!</div>
       <form id="newpoll" role="form">
   			<table class="table table-bordered table-hover" id="tab_logic1">
   				<thead>
@@ -31,8 +35,11 @@
   						<th class="text-center">
   							#
   						</th>
+              <th class='text-center'>
+                Question:
+              </th>
   						<th class="text-center">
-  							<input type="text" name='question' id="question" placeholder='Question:' class="form-control"/>
+  							<input type="text" name='question' id="question" placeholder='describe your poll question' class="form-control"/>
   						</th>
   					</tr>
   				</thead>
@@ -45,7 +52,7 @@
     						<input type="text" name='option0'  placeholder='Option' class="form-control option"/>
   						</td>
               <td>
-                <input type="text" name='descrip0' placeholder='Description' class="form-control description"/>
+                <input type="text" name='description0' placeholder='Description' class="form-control description"/>
               </td>
   					</tr>
                       <tr id='opp1'></tr>
@@ -66,7 +73,7 @@
               #
             </th>
             <th class="text-center">
-              Send the poll to your friends:
+              Invite friends to vote:
             </th>
           </tr>
         </thead>

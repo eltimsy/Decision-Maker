@@ -18,15 +18,17 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+
+// Seperated Routes for each Resource
 const createPoll  = require('./server/lib/create-poll');
 const getPoll     = require('./server/lib/get-poll');
 const regVote     = require('./server/lib/register-votes');
 const checkVoter  = require('./server/lib/check-voter');
-
-// Seperated Routes for each Resource
 const login       = require('./routes/login');
 const graph       = require('./routes/graph');
 const borda       = require('./server/lib/borda-count.js');
+const sendCongratsEmail = require('.server/lib/email').sendCongratsEmail;
+const inviteFriendsEmail = require('./server/lib/email').inviteFriendsEmail;
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -106,27 +108,17 @@ app.post("/createpoll", (req, res) => {
         .innerJoin('questions', 'users.user_id', "questions.user_id")
         .where({'users.user_id': userId})
         .orderBy('question_id', 'desc')
-        .first('email', 'admin_url', 'poll_url')
+        .first('email', 'admin_url', 'poll_url', 'username', 'question_id')
         .then((result) => {
-          sendCongratsEmail(result['email'], result['admin_url'], result['poll_url']);
+          sendCongratsEmail(mailgun, result['email'], result['admin_url'], result['poll_url']);
+          inviteFriendsEmail(mailgun, knex, result['username'], result['question_id']);
           res.redirect(303, "/main");
         });
-      })
+        .catch((error) => {
+          reject(error);
+        });
+      });
   });
-
-app.post("/email", (req, res) => {
-  var data = {
-    from: `${req.body.name} <${email}>`,
-    to: req.body.mail,
-    subject: "It's a URL",
-    text: req.body.comment
-  }
-  mailgun.messages()
-    .send(data, function (error, body) {
-      console.log(body);
-      res.redirect(303,"/");
-    })
-})
 
 /* Explanation of the (slight) callback hell below. The ajax call from the
 poll heads to this route, which first will check the email address for
@@ -206,18 +198,3 @@ app.get("/new", (req, res) => {
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
-
-function sendCongratsEmail(email, admin_url, poll_url){
-  var data = {
-    from: 'RocketVoters <rocketvoters@rendition.club>',
-    to: email,
-    subject: "Here are the links for your new poll:",
-    text: `See your poll here: ${admin_url} \n
-           Invite your friends to vote here: localhost:8080/polls/voter/${poll_url}`
-  };
-  mailgun
-    .messages()
-    .send(data, function (error, body) {
-      console.log(body);
-    });
-}
