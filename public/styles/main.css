@@ -38,6 +38,7 @@ body main#poll-container ul#poll-block-list li {
   padding: 20px 20px 20px 20px;
   font-weight: 300;
   font-size: 24px;
+  cursor: move;
 }
 
 body main#poll-container div#poll-vote-confirm {
@@ -66,6 +67,7 @@ body main#container div#history {
 
 body main#container div#history div.panel {
   border-color: #1b351b;
+  cursor: pointer;
 }
 
 body main#container div#history div.panel div.panel-heading {

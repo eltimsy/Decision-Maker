@@ -21,7 +21,7 @@ function inviteFriendsEmail(mailgun, knex, username, question_id, poll_url) {
         from: `${username} <rocketvoters@rendition.club>`,
         to: email['voter_email'],
         subject: "Hey! Come to vote for this poll!",
-        text: `Your friend invites you to Come to vote for this poll: localhost:8080/polls/voter/${poll_url}`
+        text: `Your friend invites you to vote for this poll: localhost:8080/polls/voter/${poll_url}`
       };
       console.log(email['voter_email']);
       mailgun

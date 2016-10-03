@@ -4,27 +4,32 @@ body {
   main#container {
     margin-top: 11%;
 
+    div#empty-q-warning {
+      color: red;
+      margin-left: 41%;
+      margin-bottom: -13%;
+    }
+
+    div#fewer-o-warning {
+      color: red;
+      margin-left: 41%;
+      margin-bottom: -13%;
+    }
+
+    div#empty-o-warning {
+      color: red;
+      margin-left: 41%;
+      margin-bottom: -13%;
+    }
+
     div.container {
       margin-top: 160px;
 
-      div#empty-q-warning {
-        color: red;
-        margin-left: 41%;
-      }
-
-      div#fewer-o-warning {
-        color: red;
-        margin-left: 41%;
-      }
-
-      div#empty-o-warning {
-        color: red;
-        margin-left: 41%;
-      }
 
       div.new-poll {
         float: right;
         width: 70%;
+
         table.table {
           background-color: #6A8D92;
         }
@@ -32,13 +37,16 @@ body {
           width: 15%;
           background: white;
           border: 0.1em solid grey;
+          margin-left: 40%;
         }
+
       }
 
       div.email-list {
         float: left;
         margin-left: 0%;
         width: 33%;
+        margin-top: 5.2%;
 
         table.table {
           background-color:#6A8D92;
@@ -58,4 +66,8 @@ table.table {
   th {
     height: 52px;
   }
+}
+
+input#question {
+  height: 3.5em;
 }
