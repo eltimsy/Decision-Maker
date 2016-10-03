@@ -1,6 +1,5 @@
 'use strict';
 
-/* Login page panel switch*/
 $(function() {
     $('#login-form-link').click(function(e) {
 		$("#login-form").delay(100).fadeIn(100);
@@ -54,7 +53,7 @@ $(function() {
       password: password,
       email: email
     }
-    console.log(login);
+
     $('.error').text('');
     $('.error').fadeIn();
     if(!username || !password || !email){

@@ -14,7 +14,6 @@ $(document).ready(function() {
       votechoice = data[1];
       title = data[2];
       winner = data[3];
-      console.log(voteresult, votechoice, title, winner);
       $('div.poll-container').empty();
       let $graph = $(`
         <div id="myDiv" style="width: 480px; height: 400px;"></div>
@@ -30,16 +29,16 @@ $(document).ready(function() {
       }];
 
       var layout = {
-        title: title,
+        title: title.toUpperCase(),
         height: 500,
         width: 600,
         font: {
           family: 'Courier New, monospace',
-          size: 20,
+          size: 15,
           color: 'teal'
         },
         margin: {
-          l: 50,
+          l: 100,
           r: 150,
           b: 200,
           t: 100,

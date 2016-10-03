@@ -1,12 +1,11 @@
 body {
   background-color: #eceef7;
 
-
   main#container {
     margin-top: 11%;
 
     div.container {
-      margin-top: 20%;
+      margin-top: 160px;
 
       div#empty-q-warning {
         color: red;
@@ -27,16 +26,12 @@ body {
         float: right;
         width: 70%;
         table.table {
-          background-color: #7dadab;
-
-          #newpoll-submit {
-            width: 15%;
-            margin-left: 38%;
-
-            background: white;
-            border: 0.1em solid grey;
-            margin-left: 38%;
-          }
+          background-color: #6A8D92;
+        }
+        input#newpoll-submit {
+          width: 15%;
+          background: white;
+          border: 0.1em solid grey;
         }
       }
 
@@ -46,7 +41,7 @@ body {
         width: 33%;
 
         table.table {
-          background-color:#7dadab;
+          background-color:#6A8D92;
 
           #email-list-submit {
             background: white;
@@ -55,12 +50,12 @@ body {
           }
         }
       }
-
-
-
     }
+  }
+}
 
-
-
+table.table {
+  th {
+    height: 52px;
   }
 }
