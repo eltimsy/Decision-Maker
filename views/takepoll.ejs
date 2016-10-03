@@ -28,7 +28,7 @@
         <h1 class="question"><%= result.question %></h1>
         <ul id="poll-block-list" class="list-unstyled" data-question-id="<%=result.question_id%>">
           <% result.choices.forEach((row) => { %>
-            <li data-choice-id="<%= row.choice_id %>"><%= row.choice_name %><small><%= row.description %></small></li>
+            <li data-choice-id="<%= row.choice_id %>"><%= row.choice_name %><br><small><%= row.description %></small></li>
           <% }); %>
         </ul>
       </section>

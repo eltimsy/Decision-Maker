@@ -24,23 +24,23 @@ $(document).ready(function() {
         y: voteresult,
         type: 'bar',
         marker: {
-          color: 'rgb(52,28,173)'
+          color: 'rgb(88,164,176)'
         }
       }];
 
       var layout = {
         title: title.toUpperCase(),
-        height: 500,
-        width: 600,
+        height: 600,
+        width: 800,
         font: {
-          family: 'Courier New, monospace',
+          family: 'PT Serif, monospace',
           size: 15,
-          color: 'teal'
+          color: 'rgb(64,89,73)'
         },
         margin: {
-          l: 100,
-          r: 150,
-          b: 200,
+          l: 50,
+          r: 50,
+          b: 50,
           t: 100,
           pad: 4
         },

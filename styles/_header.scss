@@ -36,8 +36,15 @@ nav.nav-bar{
     form.logout-form {
       display: flex;
       flex-direction: column;
-      div {
+      div#username {
+        font-size: 120%;
+        font-weight: bolder;
         margin-bottom: 6px;
+      }
+      input.logoutbutton {
+        background-color: white;
+        font-weight: lighter;
+        border-radius: 5px;
       }
     }
     div.login-anchor {

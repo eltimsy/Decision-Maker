@@ -163,14 +163,15 @@ app.route("/polls/voter/:id")
 
 app.get("/main", (req, res) => {
   if(req.session.auth === true) {
-    knex.select('question', 'question_id', 'admin_url')
+    knex.select('question', 'question_id', 'admin_url', 'poll_url')
       .from('questions')
       .where('user_id', req.session.userid)
       .orderBy('question_id', 'desc')
       .then(function(result) {
         const liveQuestions = result.map((value) => {
-          return [value.question,value.admin_url];
+          return [value.question,value.admin_url,value.poll_url];
         });
+        console.log(liveQuestions)
         res.render("main", {
           questions: liveQuestions,
           username: req.session.username
