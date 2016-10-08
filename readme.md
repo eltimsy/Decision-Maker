@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Project created to allow an user to create a poll with a single question and multiple choices to send to friends.
+Project created to allow an user to create a poll with a single question and multiple choices to send to friends.  Uses Mailgun API to send emails.  Users must login/register to create polls, but only need the poll link to take polls.  Users also must include emails to vote and each email can only vote once.
 
 ## Getting Started
 
