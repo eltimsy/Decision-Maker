@@ -16,7 +16,3 @@ Project created to allow an user to create a poll with a single question and mul
 7. Run the server: `npm run local`
 8. Visit `http://localhost:8080/`
 
-## Dependencies
-
-- Node 5.10.x or above
-- NPM 3.8.x or above
